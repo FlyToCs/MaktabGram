@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.Framework\MaktabGram.Framework\MaktabGram.Framework.csproj" />
+    <ProjectReference Include="..\..\01.Domain\MaktabGram.Domain\MaktabGram.Domain.csproj" />
+    <ProjectReference Include="..\..\03.Infrastructure\MaktabGram.Infrastructure.EfCore\MaktabGram.Infrastructure.EfCore.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -11,7 +11,7 @@ public class User : BaseEntity
     #endregion
 
     #region properties
-    public string Username { get; set; }
+    public string? Username { get; set; }
     public string PasswordHash { get; set; }
     public Mobile Mobile { get; set; }
     public bool IsActive { get; private set; }

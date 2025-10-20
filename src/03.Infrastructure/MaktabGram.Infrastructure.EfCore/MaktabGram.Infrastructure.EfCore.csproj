@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\01.Domain\MaktabGram.Domain\MaktabGram.Domain.csproj" />
   </ItemGroup>
 

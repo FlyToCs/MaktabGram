@@ -9,7 +9,7 @@ namespace MaktabGram.Infrastructure.EfCore.Configurations
     {
         public void Configure(EntityTypeBuilder<Comment> builder)
         {
-            builder.ToTable("Posts").HasKey(p => p.Id);
+            builder.ToTable("Comments").HasKey(p => p.Id);
 
             builder.Property(p => p.Text)
                 .HasMaxLength(1000)
