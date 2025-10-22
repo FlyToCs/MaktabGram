@@ -1,13 +1,14 @@
 ﻿using MaktabGram.Domain._common.Entities;
 using MaktabGram.Domain.UserAgg.Dtos;
+using MaktabGram.Domain.UserAgg.Entities;
 
 namespace MaktabGram.Domain.UserAgg.Contracts
 {
     public interface IUserRepository
     {
-        public Result<bool> Login(string mobile, string password);
-        public Result<bool> Register(RegisterUserInputDto model);
-        public Result<bool> IsActive(string mobile);
-        public Result<bool> MobileExists(string mobile);
+        public UserLoginOutputDto? Login(string mobile, string password);
+        public bool Register(RegisterUserInputDto model);
+        public bool IsActive(string mobile);
+        public bool MobileExists(string mobile);
     }
 }

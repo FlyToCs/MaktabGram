@@ -1,8 +1,8 @@
-﻿using MaktabGram.Domain.UserAgg.Dtos;
+﻿using MaktabGram.Framework;
+using MaktabGram.Domain.UserAgg.Dtos;
 using MaktabGram.Domain._common.Entities;
 using MaktabGram.Domain.UserAgg.Contracts;
 using MaktabGram.Infrastructure.EfCore.Repositories.UserAgg;
-using MaktabGram.Framework;
 
 namespace MaktabGram.Services.UserAgg
 {
@@ -18,22 +18,17 @@ namespace MaktabGram.Services.UserAgg
         {
             var login = userRepository.Login(mobile, password.ToMd5Hex());  
             
-            if(login.IsSuccess)
+            if(login is not null)
             {
                var isActive =  userRepository.IsActive(mobile);
 
-                if(isActive.IsSuccess)
-                {
-                    return new Result<bool> {IsSuccess = true , Message = login.Message ,Data = isActive.IsSuccess };
-                }
-                else
-                {
-                    return new Result<bool> { IsSuccess = false, Message = isActive.Message, Data = isActive.IsSuccess };
-                }
+                return isActive
+                    ? Result<bool>.Success("لاگین با موفقیت انجام شد.")
+                    : Result<bool>.Failure("کاربر با این شماره فعال نمی‌باشد.");
             }
             else
             {
-                return new Result<bool> { IsSuccess = false, Message = login.Message, Data = login.IsSuccess };
+                 return Result<bool>.Failure("نام کاربری یا کلمه عبور اشتباه می باشد.");
             }
         }
 
@@ -42,14 +37,16 @@ namespace MaktabGram.Services.UserAgg
 
             var mobileExist = userRepository.MobileExists(model.Mobile);
 
-            if (mobileExist.IsSuccess)
+            if (mobileExist)
             {
-                return new Result<bool> { IsSuccess = false, Message = "کاربر با این شماره موجود می باشد.", Data = false };
+                return Result<bool>.Failure("کاربر با این شماره موجود می باشد.");
             }
 
             model.Password = model.Password.ToMd5Hex();
 
-            return userRepository.Register(model);
+            userRepository.Register(model);
+
+            return Result<bool>.Success("ثبت نام با موفقیت انجام شد.");
         }
     }
 }

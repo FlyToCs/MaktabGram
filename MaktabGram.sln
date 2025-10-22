@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.Framework", "00.Framewor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaktabGram.Framework", "src\00.Framework\MaktabGram.Framework\MaktabGram.Framework.csproj", "{056DF318-BD5C-45C7-B413-5749961A1C68}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaktabGram.Presentation.MVC", "src\04.Presentation\MaktabGram.Presentation.MVC\MaktabGram.Presentation.MVC.csproj", "{50F3765E-B667-40AB-B1AD-66905211B41D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{056DF318-BD5C-45C7-B413-5749961A1C68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{056DF318-BD5C-45C7-B413-5749961A1C68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{056DF318-BD5C-45C7-B413-5749961A1C68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50F3765E-B667-40AB-B1AD-66905211B41D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50F3765E-B667-40AB-B1AD-66905211B41D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50F3765E-B667-40AB-B1AD-66905211B41D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50F3765E-B667-40AB-B1AD-66905211B41D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +72,7 @@ Global
 		{F362A355-8380-4795-8319-D8D30AD2582C} = {7BF53CEA-BBEA-4B23-AB41-59B6CD8D2B37}
 		{501AA2B3-2888-46F1-80EB-4CD47B309AF4} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{056DF318-BD5C-45C7-B413-5749961A1C68} = {501AA2B3-2888-46F1-80EB-4CD47B309AF4}
+		{50F3765E-B667-40AB-B1AD-66905211B41D} = {6E696498-1182-4C26-B3C9-5AC1C0C6AE63}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {343B6C32-145C-418D-B09C-F41664B6A4D7}

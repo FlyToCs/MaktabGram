@@ -1,6 +1,7 @@
 ﻿using MaktabGram.Domain.CommentAgg.Entities;
 using MaktabGram.Domain.PostAgg.Entities;
 using MaktabGram.Domain.UserAgg.Entities;
+using MaktabGram.Domain.UserAgg.ValueObjects;
 using MaktabGram.Infrastructure.EfCore.Configurations;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +26,15 @@ namespace MaktabGram.Infrastructure.EfCore.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+
+
+            modelBuilder.Entity<User>()
+               .Property(u => u.Mobile)
+               .HasConversion(
+                   m => m.Value,         // تبدیل Mobile -> string برای ذخیره
+                   v => Mobile.Create(v) // تبدیل string -> Mobile برای خواندن
+               )
+               .HasColumnName("Mobile");
 
             base.OnModelCreating(modelBuilder);
         }
