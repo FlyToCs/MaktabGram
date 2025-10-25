@@ -10,5 +10,10 @@ namespace MaktabGram.Domain.UserAgg.Contracts
         public bool Register(RegisterUserInputDto model);
         public bool IsActive(string mobile);
         public bool MobileExists(string mobile);
+        public List<GetUserSummaryDto> GetUsersSummary();
+        public void Active(int userId);
+        public void DeActive(int userId);
+
+
     }
 }

@@ -27,15 +27,6 @@ namespace MaktabGram.Infrastructure.EfCore.Persistence
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
 
-
-            modelBuilder.Entity<User>()
-               .Property(u => u.Mobile)
-               .HasConversion(
-                   m => m.Value,         // تبدیل Mobile -> string برای ذخیره
-                   v => Mobile.Create(v) // تبدیل string -> Mobile برای خواندن
-               )
-               .HasColumnName("Mobile");
-
             base.OnModelCreating(modelBuilder);
         }
     }

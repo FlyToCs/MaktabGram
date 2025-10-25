@@ -5,7 +5,10 @@ namespace MaktabGram.Domain.UserAgg.Contracts
 {
     public interface IUserService
     {
-        public Result<bool> Login(string mobile, string password);
+        public Result<UserLoginOutputDto> Login(string mobile, string password);
         public Result<bool> Register(RegisterUserInputDto model);
+        List<GetUserSummaryDto> GetUsersSummary();
+        public void Active(int userId);
+        public void DeActive(int userId);
     }
 }

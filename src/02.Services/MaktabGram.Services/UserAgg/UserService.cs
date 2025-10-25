@@ -6,7 +6,7 @@ using MaktabGram.Infrastructure.EfCore.Repositories.UserAgg;
 
 namespace MaktabGram.Services.UserAgg
 {
-    public class UserService  : IUserService
+    public class UserService : IUserService
     {
         private readonly IUserRepository userRepository;
 
@@ -14,21 +14,39 @@ namespace MaktabGram.Services.UserAgg
         {
             userRepository = new UserRepository();
         }
-        public Result<bool> Login(string mobile, string password)
+
+        public void Active(int userId)
+         => userRepository.Active(userId);
+
+
+        public void DeActive(int userId)
+         => userRepository.DeActive(userId);
+
+        public List<GetUserSummaryDto> GetUsersSummary()
         {
-            var login = userRepository.Login(mobile, password.ToMd5Hex());  
-            
-            if(login is not null)
+            var users = userRepository.GetUsersSummary();
+
+            users.ForEach(user =>
+                user.CreateAtFa = user.CreateAt.ToPersianString("yyyy/MM/dd"));
+
+            return users;
+        }
+
+        public Result<UserLoginOutputDto> Login(string mobile, string password)
+        {
+            var login = userRepository.Login(mobile, password.ToMd5Hex());
+
+            if (login is not null)
             {
-               var isActive =  userRepository.IsActive(mobile);
+                var isActive = userRepository.IsActive(mobile);
 
                 return isActive
-                    ? Result<bool>.Success("لاگین با موفقیت انجام شد.")
-                    : Result<bool>.Failure("کاربر با این شماره فعال نمی‌باشد.");
+                    ? Result<UserLoginOutputDto>.Success("لاگین با موفقیت انجام شد.", login)
+                    : Result<UserLoginOutputDto>.Failure("کاربر با این شماره فعال نمی‌باشد.");
             }
             else
             {
-                 return Result<bool>.Failure("نام کاربری یا کلمه عبور اشتباه می باشد.");
+                return Result<UserLoginOutputDto>.Failure("نام کاربری یا کلمه عبور اشتباه می باشد.");
             }
         }
 

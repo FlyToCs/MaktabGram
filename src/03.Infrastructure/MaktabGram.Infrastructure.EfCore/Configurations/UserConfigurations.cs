@@ -1,4 +1,6 @@
-﻿using MaktabGram.Domain.UserAgg.Entities;
+﻿using MaktabGram.Domain.UserAgg.Dtos;
+using MaktabGram.Domain.UserAgg.Entities;
+using MaktabGram.Domain.UserAgg.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Reflection.Emit;
@@ -20,15 +22,15 @@ namespace MaktabGram.Infrastructure.EfCore.Configurations
                 .HasMaxLength(100)
                 .IsRequired(true);
 
-            //builder.OwnsOne(u => u.Mobile, mobile =>
-            //{
-            //    mobile.Property(m => m.Value)
-            //    .HasColumnName("Mobile")
-            //    .HasMaxLength(11)
-            //    .IsRequired(true);
-            //});
+            builder.OwnsOne(u => u.Mobile, mobile =>
+            {
+                mobile.Property(m => m.Value)
+                .HasColumnName("Mobile")
+                .HasMaxLength(11)
+                .IsRequired(true);
+            });
 
- 
+
 
             builder.HasOne(u=>u.Profile)
                 .WithOne(up=>up.User)
@@ -76,3 +78,5 @@ namespace MaktabGram.Infrastructure.EfCore.Configurations
         }
     }
 }
+
+

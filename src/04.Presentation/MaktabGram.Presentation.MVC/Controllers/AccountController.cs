@@ -1,5 +1,6 @@
 ﻿using MaktabGram.Domain.UserAgg.Contracts;
 using MaktabGram.Domain.UserAgg.Dtos;
+using MaktabGram.Presentation.MVC.Database;
 using MaktabGram.Presentation.MVC.Models;
 using MaktabGram.Services.UserAgg;
 using Microsoft.AspNetCore.Mvc;
@@ -16,19 +17,32 @@ namespace MaktabGram.Presentation.MVC.Controllers
         }
 
         [HttpGet]
-        public ActionResult Login()
+        public IActionResult Login()
         {
             return View(new LoginViewModel());
         }
 
         [HttpPost]
-        public ActionResult Login(LoginViewModel model)
+        public IActionResult Login(LoginViewModel model)
         {
             var loginResullt = userService.Login(model.Mobile, model.Password);
 
-            if(loginResullt.IsSuccess)
+            if (loginResullt.IsSuccess)
             {
-                //......
+                if (loginResullt.Data!.IsAdmin)
+                {
+                    InMemoryDatabase.OnlineUser = new OnlineUser
+                    {
+                        Id = loginResullt.Data.Id,
+                        IsAdmin = loginResullt.Data.IsAdmin,
+                        Username = loginResullt.Data.Username
+                    };
+                     
+                    return RedirectToAction("Index", "Admin");
+                }
+                {
+                    // Redirect to profile
+                }
             }
             else
             {
@@ -39,14 +53,14 @@ namespace MaktabGram.Presentation.MVC.Controllers
         }
 
         [HttpGet]
-        public ActionResult Register()
+        public IActionResult Register()
         {
             return View(new RegisterViewModel());
         }
 
 
         [HttpPost]
-        public ActionResult Register(RegisterViewModel model)
+        public IActionResult Register(RegisterViewModel model)
         {
             var userModel = new RegisterUserInputDto
             {
@@ -59,8 +73,8 @@ namespace MaktabGram.Presentation.MVC.Controllers
 
             var registerResult = userService.Register(userModel);
 
-            if (registerResult.IsSuccess) 
-            { 
+            if (registerResult.IsSuccess)
+            {
                 //.....
             }
             else

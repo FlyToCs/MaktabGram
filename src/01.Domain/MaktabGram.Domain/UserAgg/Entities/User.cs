@@ -7,15 +7,20 @@ namespace MaktabGram.Domain.UserAgg.Entities;
 public class User : BaseEntity
 {
     #region Ctor
-    public User() { }
+    public User() 
+    {
+        IsActive = true;
+        IsAdmin = false;
+    }
     #endregion
 
     #region properties
     public string? Username { get; set; }
     public string PasswordHash { get; set; }
     public Mobile Mobile { get; set; }
-    public bool IsActive { get; private set; }
+    public bool IsActive { get; set; }
     public bool VerifiedBadge { get; private set; }
+    public bool IsAdmin { get; set; }
 
     #endregion
 
