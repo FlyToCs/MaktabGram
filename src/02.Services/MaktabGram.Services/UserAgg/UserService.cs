@@ -3,16 +3,20 @@ using MaktabGram.Domain.UserAgg.Dtos;
 using MaktabGram.Domain._common.Entities;
 using MaktabGram.Domain.UserAgg.Contracts;
 using MaktabGram.Infrastructure.EfCore.Repositories.UserAgg;
+using MaktabGram.Domain.FileAgg;
+using MaktabGram.Services.FileAgg.Service;
 
 namespace MaktabGram.Services.UserAgg
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository userRepository;
+        private readonly IFileService fileService;
 
         public UserService()
         {
             userRepository = new UserRepository();
+            fileService = new FileService();
         }
 
         public void Active(int userId)
@@ -52,12 +56,16 @@ namespace MaktabGram.Services.UserAgg
 
         public Result<bool> Register(RegisterUserInputDto model)
         {
-
             var mobileExist = userRepository.MobileExists(model.Mobile);
 
             if (mobileExist)
             {
                 return Result<bool>.Failure("کاربر با این شماره موجود می باشد.");
+            }
+
+            if(model.ProfileImg is not null)
+            {
+                model.ProfileImageUrl = fileService.Upload(model.ProfileImg, "Profiles");
             }
 
             model.Password = model.Password.ToMd5Hex();

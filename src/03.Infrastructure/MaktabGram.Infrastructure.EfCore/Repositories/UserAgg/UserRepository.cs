@@ -44,7 +44,8 @@ namespace MaktabGram.Infrastructure.EfCore.Repositories.UserAgg
                 LastName = u.Profile.LastName,
                 IsAdmin = u.IsAdmin,
                 Status = u.IsActive,
-                CreateAt = u.CreatedAt
+                CreateAt = u.CreatedAt,
+                ImageProfileUrl = u.Profile.ProfileImageUrl,
             }).ToList();
 
             return user;
@@ -78,7 +79,7 @@ namespace MaktabGram.Infrastructure.EfCore.Repositories.UserAgg
 
         public bool MobileExists(string mobile)
         {
-            return dbContext.Users.Any(u => u.Mobile == Mobile.Create(mobile));
+            return dbContext.Users.Any(u => u.Mobile.Value == mobile);
         }
 
         public bool Register(RegisterUserInputDto model)
@@ -93,6 +94,7 @@ namespace MaktabGram.Infrastructure.EfCore.Repositories.UserAgg
                 {
                     FirstName = model.FirstName,
                     LastName = model.LastName,
+                    ProfileImageUrl = model.ProfileImageUrl,
                 }
             };
 

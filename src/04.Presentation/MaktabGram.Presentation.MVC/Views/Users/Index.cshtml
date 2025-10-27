@@ -13,6 +13,7 @@
 
         <div class="card p-6">
 
+            <a asp-action="Create" class="btn btn-primary p-2 m-2 w-40">ایجاد کاربر</a>
             <!-- Search Input -->
             <div class="mb-4">
                 <input type="text" id="user-search" onkeyup="filterTable()" placeholder="جستجو بر اساس نام، ایمیل یا نقش..."
@@ -57,6 +58,9 @@
                             <tr class="hover:bg-gray-50 transition duration-150">
 
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">@user.Id</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <img width="100px" height="100px" style="border-radius: 50%;" src="@user.ImageProfileUrl" />
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">@user.FirstName @user.LastName</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">@user.Mobile</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">@user.Email</td>

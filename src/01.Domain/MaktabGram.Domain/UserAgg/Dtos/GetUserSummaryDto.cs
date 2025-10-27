@@ -12,6 +12,7 @@
         public bool Status { get; set; }
         public DateTime CreateAt { get; set; }
         public string? CreateAtFa { get; set; }
+        public string? ImageProfileUrl { get; set; }
 
     }
 }

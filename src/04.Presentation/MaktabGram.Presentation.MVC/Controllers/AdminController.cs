@@ -33,28 +33,5 @@ namespace MaktabGram.Presentation.MVC.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult Users()
-        {
-            var users = userService.GetUsersSummary();
-
-            return View(users);
-        }
-
-        [HttpGet]
-        public IActionResult Active(int userId)
-        {
-            userService.Active(userId);
-
-            return RedirectToAction("Users");
-        }
-
-        [HttpGet]
-        public IActionResult DeActive(int userId)
-        {
-            userService.DeActive(userId);
-
-            return RedirectToAction("Users");
-        }
     }
 }
