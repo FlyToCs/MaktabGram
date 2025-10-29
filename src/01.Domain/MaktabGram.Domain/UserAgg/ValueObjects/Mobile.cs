@@ -3,7 +3,7 @@
 namespace MaktabGram.Domain.UserAgg.ValueObjects;
 public class Mobile
 {
-    public string Value { get; }
+    public string Value { get; set; }
 
     private Mobile(string value)
     {

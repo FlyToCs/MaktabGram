@@ -8,7 +8,10 @@ namespace MaktabGram.Domain.UserAgg.Contracts
         public Result<UserLoginOutputDto> Login(string mobile, string password);
         public Result<bool> Register(RegisterUserInputDto model);
         List<GetUserSummaryDto> GetUsersSummary();
+        public UpdateGetUserDto GetUpdateUserDetails(int userId);
         public void Active(int userId);
         public void DeActive(int userId);
+        public Result<bool> Update(int userId, UpdateGetUserDto model);
+
     }
 }

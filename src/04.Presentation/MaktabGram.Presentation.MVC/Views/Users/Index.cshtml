@@ -29,6 +29,9 @@
                                 شناسه
                             </th>
                             <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                تصویر
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 نام کامل
                             </th>
                             <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -102,6 +105,10 @@
                                         }
                                     }
                                     
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <a asp-action="Update" asp-route-userId="@user.Id" class="px-3 py-1 bg-yellow-500 text-white text-xs rounded-lg hover:bg-green-600 transition duration-150 shadow-md">ویرایش</a>
                                 </td>
                             </tr>
                         }

@@ -6,7 +6,21 @@ namespace MaktabGram.Services.FileAgg.Service
 {
     public class FileService : IFileService
     {
-        public  string Upload(IFormFile file , string folder)
+        public void Delete(string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+                return;
+
+            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileName);
+
+            if (File.Exists(fullPath))
+            {
+                File.Delete(fullPath);
+            }
+        }
+
+
+        public string Upload(IFormFile file , string folder)
         {
 
             var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Files" ,folder);

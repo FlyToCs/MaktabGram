@@ -1,5 +1,6 @@
 ﻿using MaktabGram.Domain.UserAgg.Contracts;
 using MaktabGram.Domain.UserAgg.Dtos;
+using MaktabGram.Domain.UserAgg.Entities;
 using MaktabGram.Services.UserAgg;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,6 +49,26 @@ namespace MaktabGram.Presentation.MVC.Controllers
             userService.DeActive(userId);
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Update(int userId)
+        {
+            var result = userService.GetUpdateUserDetails(userId);
+
+            return View(result);
+        }
+
+        [HttpPost]
+        public IActionResult Update(UpdateGetUserDto model)
+        {
+            var result = userService.Update(model.Id, model);
+            if(result.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
         }
     }
 }

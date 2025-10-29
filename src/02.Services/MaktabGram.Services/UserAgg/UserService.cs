@@ -1,10 +1,11 @@
-﻿using MaktabGram.Framework;
-using MaktabGram.Domain.UserAgg.Dtos;
-using MaktabGram.Domain._common.Entities;
-using MaktabGram.Domain.UserAgg.Contracts;
-using MaktabGram.Infrastructure.EfCore.Repositories.UserAgg;
+﻿using MaktabGram.Domain._common.Entities;
 using MaktabGram.Domain.FileAgg;
+using MaktabGram.Domain.UserAgg.Contracts;
+using MaktabGram.Domain.UserAgg.Dtos;
+using MaktabGram.Framework;
+using MaktabGram.Infrastructure.EfCore.Repositories.UserAgg;
 using MaktabGram.Services.FileAgg.Service;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MaktabGram.Services.UserAgg
 {
@@ -63,7 +64,7 @@ namespace MaktabGram.Services.UserAgg
                 return Result<bool>.Failure("کاربر با این شماره موجود می باشد.");
             }
 
-            if(model.ProfileImg is not null)
+            if (model.ProfileImg is not null)
             {
                 model.ProfileImageUrl = fileService.Upload(model.ProfileImg, "Profiles");
             }
@@ -73,6 +74,38 @@ namespace MaktabGram.Services.UserAgg
             userRepository.Register(model);
 
             return Result<bool>.Success("ثبت نام با موفقیت انجام شد.");
+        }
+
+        public UpdateGetUserDto GetUpdateUserDetails(int userId)
+        {
+            var user = userRepository.GetUpdateUserDetails(userId);
+            return user;
+        }
+
+        public Result<bool> Update(int userId, UpdateGetUserDto model)
+        {
+            if (model.ImgProfile is not null)
+            {
+                var existingImageUrl = userRepository.GetImageProfileUrl(userId);
+                fileService.Delete(existingImageUrl);
+                model.ImageProfileUrl = fileService.Upload(model.ImgProfile!, "Profiles");
+            }
+
+            if(model.Password is not null)
+            {
+                model.Password = model.Password.ToMd5Hex();
+            }
+
+            var result = userRepository.Update(userId, model);
+
+            if(result)
+            {
+                return Result<bool>.Success("اطلاعات کاربر با موفقیت به‌روزرسانی شد.");
+            }
+            else
+            {
+                return Result<bool>.Failure("به‌روزرسانی اطلاعات کاربر با خطا مواجه شد.");
+            }   
         }
     }
 }
