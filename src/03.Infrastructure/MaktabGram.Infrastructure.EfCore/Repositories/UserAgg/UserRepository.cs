@@ -139,8 +139,15 @@ namespace MaktabGram.Infrastructure.EfCore.Repositories.UserAgg
                     user.Profile.Email = model.Email;
                     user.Profile.FirstName = model.FirstName;
                     user.Profile.LastName = model.LastName;
+
+                    user.PasswordHash = (!string.IsNullOrEmpty(model.Password)) ?
+                        model.Password : user.PasswordHash;
+
                     if (!string.IsNullOrEmpty(model.ImageProfileUrl))
                         user.Profile.ProfileImageUrl = model.ImageProfileUrl;
+
+
+
 
                     dbContext.SaveChanges();
                     return true;
@@ -165,6 +172,13 @@ namespace MaktabGram.Infrastructure.EfCore.Repositories.UserAgg
                 throw new NullReferenceException("Profile image URL not found.");
 
             return imgAddress;
+        }
+
+        public List<int> GetUserIdsBy(List<string> userNames)
+        {
+            return dbContext.Users
+                .Where(u=> userNames.Contains(u.Username))
+                .Select(u => u.Id).ToList();
         }
     }
 }

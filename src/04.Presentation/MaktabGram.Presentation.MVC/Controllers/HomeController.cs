@@ -8,6 +8,8 @@ namespace MaktabGram.Presentation.MVC.Controllers
     {
         public IActionResult Index()
         {
+            var temp = Request;
+
             return View();
         }
 
@@ -18,7 +20,7 @@ namespace MaktabGram.Presentation.MVC.Controllers
 
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
         }
     }
 }
