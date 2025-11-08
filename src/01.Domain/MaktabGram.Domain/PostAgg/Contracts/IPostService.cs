@@ -6,5 +6,6 @@ namespace MaktabGram.Domain.PostAgg.Contracts
     public interface IPostService
     {
         Result<bool> Create(CreatePostInputDto model);
+        public List<GetPostForFeedsDto> GetFeedPosts();
     }
 }

@@ -6,6 +6,7 @@ using MaktabGram.Domain.UserAgg.Contracts;
 using MaktabGram.Infrastructure.EfCore.Repositories.PostAgg;
 using MaktabGram.Infrastructure.EfCore.Repositories.UserAgg;
 using MaktabGram.Services.FileAgg.Service;
+using System.Net;
 
 namespace MaktabGram.Services.PostAgg
 {
@@ -22,17 +23,30 @@ namespace MaktabGram.Services.PostAgg
         }
         public Result<bool> Create(CreatePostInputDto model)
         {
-            
+            try
+            {
+                throw new Exception();
+                model.ImgUrl = fileService.Upload(model.Img, "Posts");
+                model.TaggedUsers = SetUserTags(model.Tags);
+                var postId = postRepository.Create(model);
+                return Result<bool>.Success("پست با موفقیت ذخیره شد.");
+            }
+            catch (Exception ex) 
+            {
+                return Result<bool>.Failure("ایجاد پست با خطا روبرو شد.");
+            }
+        }
 
-            model.ImgUrl = fileService.Upload(model.Img, "Posts");
+        public List<GetPostForFeedsDto> GetFeedPosts()
+        {
+            return postRepository.GetFeedPosts();
+        }
 
-            var tags = model.Tags.Split('#').ToList();
+        private List<int> SetUserTags(string postTags)
+        {
+            var tags = postTags.Split('#').ToList();
             var userNames = tags.Select(x => x.Trim()).ToList();
-            model.TaggedUsers = userRepository.GetUserIdsBy(userNames);
-
-            var postId = postRepository.Create(model);
-
-            throw new NotImplementedException();
+            return userRepository.GetUserIdsBy(userNames);
         }
     }
 }

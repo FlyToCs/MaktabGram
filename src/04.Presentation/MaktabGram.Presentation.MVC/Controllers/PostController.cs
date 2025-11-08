@@ -20,13 +20,14 @@ namespace MaktabGram.Presentation.MVC.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var posts = postService.GetFeedPosts();
+            return View(posts);
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(CreatePostInputDto? model)
         {
-            return View();
+            return View( model);
         }
 
         [HttpGet]
@@ -38,10 +39,20 @@ namespace MaktabGram.Presentation.MVC.Controllers
         [HttpPost]
         public IActionResult CreatePost(CreatePostInputDto model)
         {
-            model.UserId = 3; //InMemoryDatabase.OnlineUser.Id;
+            model.UserId = InMemoryDatabase.OnlineUser.Id;
 
-            postService.Create(model);
-            return View();
+            var result = postService.Create(model);
+
+            if(result.IsSuccess)
+            {
+                return RedirectToAction("Index", model);
+            }
+            else
+            {
+                ViewBag.Error = result.Message;
+                return RedirectToAction("Create", model);
+            }
+               
         }
     }
 }

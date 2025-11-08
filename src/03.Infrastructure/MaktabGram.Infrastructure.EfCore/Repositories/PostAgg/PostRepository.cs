@@ -1,12 +1,10 @@
 ﻿using MaktabGram.Domain.PostAgg.Contracts;
 using MaktabGram.Domain.PostAgg.Dtos;
 using MaktabGram.Domain.PostAgg.Entities;
+using MaktabGram.Framework;
 using MaktabGram.Infrastructure.EfCore.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace MaktabGram.Infrastructure.EfCore.Repositories.PostAgg
 {
@@ -18,6 +16,24 @@ namespace MaktabGram.Infrastructure.EfCore.Repositories.PostAgg
         {
             appDbContext = new AppDbContext();
         }
+
+        public List<GetPostForFeedsDto>GetFeedPosts()
+        {
+            var posts = appDbContext.Posts.Include(p=>p.Comments).ThenInclude(c=>c.User)
+                .Select(p => new GetPostForFeedsDto
+            {
+                Caption = p.Caption,
+                ImgPostUrl = p.ImageUrl,
+                LikeCount = p.PostLikes.Count,
+                Username = p.User.Username,
+                CreateAt = p.CreatedAt.ToPersianString("dddd, dd MMMM,yyyy"),
+                ProfileImgUrl = p.User.Profile.ProfileImageUrl,
+                Comments = p.Comments
+            }).ToList();
+
+            return posts;
+        }
+
         public int Create(CreatePostInputDto model)
         {
             var post = new Post
@@ -26,6 +42,7 @@ namespace MaktabGram.Infrastructure.EfCore.Repositories.PostAgg
                 ImageUrl = model.ImgUrl!,
                 OpenComment = model.ShowComment,
                 UserId = model.UserId,
+                CreatedAt = DateTime.Now,
                 TaggedUsers = model.TaggedUsers.Select(x=>new PostTag()
                 {
                     TaggedUserId = x,
