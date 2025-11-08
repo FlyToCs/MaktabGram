@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-namespace MaktabGram.Domain.FileAgg
+namespace MaktabGram.Domain.Core.FileAgg
 {
     public interface IFileService
     {

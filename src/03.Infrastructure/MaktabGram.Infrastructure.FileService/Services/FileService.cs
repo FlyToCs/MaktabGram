@@ -1,8 +1,8 @@
-﻿using MaktabGram.Domain.FileAgg;
+﻿using MaktabGram.Domain.Core.FileAgg;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
-namespace MaktabGram.Services.FileAgg.Service
+namespace MaktabGram.Domain.Services.FileAgg.Service
 {
     public class FileService : IFileService
     {
@@ -32,7 +32,7 @@ namespace MaktabGram.Services.FileAgg.Service
 
             var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-     
+
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                  file.CopyTo(stream);

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MaktabGram.Domain.UserAgg.Dtos
+namespace MaktabGram.Domain.Core.UserAgg.Dtos
 {
     public class UpdateGetUserDto
     {

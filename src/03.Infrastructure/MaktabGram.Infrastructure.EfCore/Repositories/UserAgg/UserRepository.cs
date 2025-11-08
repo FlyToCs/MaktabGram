@@ -1,8 +1,7 @@
-﻿using MaktabGram.Domain._common.Entities;
-using MaktabGram.Domain.UserAgg.Contracts;
-using MaktabGram.Domain.UserAgg.Dtos;
-using MaktabGram.Domain.UserAgg.Entities;
-using MaktabGram.Domain.UserAgg.ValueObjects;
+﻿using MaktabGram.Domain.Core.UserAgg.Contracts;
+using MaktabGram.Domain.Core.UserAgg.Dtos;
+using MaktabGram.Domain.Core.UserAgg.Entities;
+using MaktabGram.Domain.Core.UserAgg.ValueObjects;
 using MaktabGram.Infrastructure.EfCore.Persistence;
 using Microsoft.EntityFrameworkCore;
 

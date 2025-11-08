@@ -1,6 +1,6 @@
-﻿using MaktabGram.Domain.UserAgg.Entities;
+﻿using MaktabGram.Domain.Core.UserAgg.Entities;
 
-namespace MaktabGram.Domain.PostAgg.Entities;
+namespace MaktabGram.Domain.Core.PostAgg.Entities;
 public class PostSave
 {
     public int UserId { get; set; }

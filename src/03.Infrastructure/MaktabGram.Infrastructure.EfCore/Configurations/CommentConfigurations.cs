@@ -1,4 +1,4 @@
-﻿using MaktabGram.Domain.CommentAgg.Entities;
+﻿using MaktabGram.Domain.Core.CommentAgg.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

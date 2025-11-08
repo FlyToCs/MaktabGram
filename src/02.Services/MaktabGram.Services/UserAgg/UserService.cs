@@ -1,31 +1,22 @@
-﻿using MaktabGram.Domain._common.Entities;
-using MaktabGram.Domain.FileAgg;
-using MaktabGram.Domain.UserAgg.Contracts;
-using MaktabGram.Domain.UserAgg.Dtos;
+﻿using MaktabGram.Domain.Core._common.Entities;
+using MaktabGram.Domain.Core.FileAgg;
+using MaktabGram.Domain.Core.UserAgg.Contracts;
+using MaktabGram.Domain.Core.UserAgg.Dtos;
+using MaktabGram.Domain.Services.FileAgg.Service;
 using MaktabGram.Framework;
 using MaktabGram.Infrastructure.EfCore.Repositories.UserAgg;
-using MaktabGram.Services.FileAgg.Service;
-using Microsoft.IdentityModel.Tokens;
 
-namespace MaktabGram.Services.UserAgg
+namespace MaktabGram.Domain.Services.UserAgg
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository userRepository;
         private readonly IFileService fileService;
-
         public UserService()
         {
             userRepository = new UserRepository();
             fileService = new FileService();
         }
-
-        public void Active(int userId)
-         => userRepository.Active(userId);
-
-
-        public void DeActive(int userId)
-         => userRepository.DeActive(userId);
 
         public List<GetUserSummaryDto> GetUsersSummary()
         {
@@ -36,28 +27,42 @@ namespace MaktabGram.Services.UserAgg
 
             return users;
         }
-
-        public Result<UserLoginOutputDto> Login(string mobile, string password)
+        public void Active(int userId) => userRepository.Active(userId);
+        public void DeActive(int userId) => userRepository.DeActive(userId);
+        public UserLoginOutputDto? Login(string mobile, string password) => userRepository.Login(mobile, password);
+        public UpdateGetUserDto GetUpdateUserDetails(int userId) => userRepository.GetUpdateUserDetails(userId);
+        public Result<bool> Update(int userId, UpdateGetUserDto model)
         {
-            var login = userRepository.Login(mobile, password.ToMd5Hex());
-
-            if (login is not null)
+            if (model.ImgProfile is not null)
             {
-                var isActive = userRepository.IsActive(mobile);
+                var existingImageUrl = userRepository.GetImageProfileUrl(userId);
+                fileService.Delete(existingImageUrl);
+                model.ImageProfileUrl = fileService.Upload(model.ImgProfile!, "Profiles");
+            }
 
-                return isActive
-                    ? Result<UserLoginOutputDto>.Success("لاگین با موفقیت انجام شد.", login)
-                    : Result<UserLoginOutputDto>.Failure("کاربر با این شماره فعال نمی‌باشد.");
+            if (model.Password is not null)
+            {
+                model.Password = model.Password.ToMd5Hex();
+            }
+
+            var result = userRepository.Update(userId, model);
+
+            if (result)
+            {
+                return Result<bool>.Success("اطلاعات کاربر با موفقیت به‌روزرسانی شد.");
             }
             else
             {
-                return Result<UserLoginOutputDto>.Failure("نام کاربری یا کلمه عبور اشتباه می باشد.");
+                return Result<bool>.Failure("به‌روزرسانی اطلاعات کاربر با خطا مواجه شد.");
             }
         }
-
-        public Result<bool> Register(RegisterUserInputDto model)
+        public bool IsActive(string mobile) => userRepository.IsActive(mobile);
+        public bool MobileExists(string mobile) => userRepository.MobileExists(mobile);
+        public string GetImageProfileUrl(int userId) => userRepository.GetImageProfileUrl(userId);
+        public List<int> GetUserIdsBy(List<string> userNames) => userRepository.GetUserIdsBy(userNames);
+        public Result<bool> Register(RegisterUserInputDto model) 
         {
-            var mobileExist = userRepository.MobileExists(model.Mobile);
+            var mobileExist = MobileExists(model.Mobile);
 
             if (mobileExist)
             {
@@ -74,38 +79,6 @@ namespace MaktabGram.Services.UserAgg
             userRepository.Register(model);
 
             return Result<bool>.Success("ثبت نام با موفقیت انجام شد.");
-        }
-
-        public UpdateGetUserDto GetUpdateUserDetails(int userId)
-        {
-            var user = userRepository.GetUpdateUserDetails(userId);
-            return user;
-        }
-
-        public Result<bool> Update(int userId, UpdateGetUserDto model)
-        {
-            if (model.ImgProfile is not null)
-            {
-                var existingImageUrl = userRepository.GetImageProfileUrl(userId);
-                fileService.Delete(existingImageUrl);
-                model.ImageProfileUrl = fileService.Upload(model.ImgProfile!, "Profiles");
-            }
-
-            if(model.Password is not null)
-            {
-                model.Password = model.Password.ToMd5Hex();
-            }
-
-            var result = userRepository.Update(userId, model);
-
-            if(result)
-            {
-                return Result<bool>.Success("اطلاعات کاربر با موفقیت به‌روزرسانی شد.");
-            }
-            else
-            {
-                return Result<bool>.Failure("به‌روزرسانی اطلاعات کاربر با خطا مواجه شد.");
-            }   
         }
     }
 }

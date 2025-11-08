@@ -1,16 +1,17 @@
-﻿using MaktabGram.Domain.UserAgg.Contracts;
+﻿using MaktabGram.Domain.ApplicationServices.UserAgg;
+using MaktabGram.Domain.Core.UserAgg.Contracts;
+using MaktabGram.Domain.Services.UserAgg;
 using MaktabGram.Presentation.MVC.Database;
-using MaktabGram.Services.UserAgg;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MaktabGram.Presentation.MVC.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly IUserService userService;
+        private readonly IUserApplicationService userApplicationService;
         public AdminController()
         {
-            userService = new UserService();
+            userApplicationService = new UserApplicationService();
         }
 
         public IActionResult Index()

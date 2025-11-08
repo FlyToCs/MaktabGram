@@ -1,19 +1,19 @@
-﻿using MaktabGram.Domain.UserAgg.Contracts;
-using MaktabGram.Domain.UserAgg.Dtos;
+﻿using MaktabGram.Domain.ApplicationServices.UserAgg;
+using MaktabGram.Domain.Core.UserAgg.Contracts;
+using MaktabGram.Domain.Core.UserAgg.Dtos;
 using MaktabGram.Presentation.MVC.Database;
 using MaktabGram.Presentation.MVC.Models;
-using MaktabGram.Services.UserAgg;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MaktabGram.Presentation.MVC.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IUserService userService;
+        private readonly IUserApplicationService userApplicationService;
 
         public AccountController()
         {
-            userService = new UserService();
+            userApplicationService = new UserApplicationService();
         }
 
         [HttpGet]
@@ -25,7 +25,7 @@ namespace MaktabGram.Presentation.MVC.Controllers
         [HttpPost]
         public IActionResult Login(LoginViewModel model)
         {
-            var loginResullt = userService.Login(model.Mobile, model.Password);
+            var loginResullt = userApplicationService.Login(model.Mobile, model.Password);
 
             if (loginResullt.IsSuccess)
             {
@@ -71,7 +71,7 @@ namespace MaktabGram.Presentation.MVC.Controllers
                 Username = model.Username,
             };
 
-            var registerResult = userService.Register(userModel);
+            var registerResult = userApplicationService.Register(userModel);
 
             if (registerResult.IsSuccess)
             {

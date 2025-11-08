@@ -1,14 +1,14 @@
-﻿using MaktabGram.Domain._common.Entities;
-using MaktabGram.Domain.FileAgg;
-using MaktabGram.Domain.PostAgg.Contracts;
-using MaktabGram.Domain.PostAgg.Dtos;
-using MaktabGram.Domain.UserAgg.Contracts;
+﻿using MaktabGram.Domain.Core._common.Entities;
+using MaktabGram.Domain.Core.FileAgg;
+using MaktabGram.Domain.Core.PostAgg.Contracts;
+using MaktabGram.Domain.Core.PostAgg.Dtos;
+using MaktabGram.Domain.Core.UserAgg.Contracts;
+using MaktabGram.Domain.Services.FileAgg.Service;
 using MaktabGram.Infrastructure.EfCore.Repositories.PostAgg;
 using MaktabGram.Infrastructure.EfCore.Repositories.UserAgg;
-using MaktabGram.Services.FileAgg.Service;
 using System.Net;
 
-namespace MaktabGram.Services.PostAgg
+namespace MaktabGram.Domain.Services.PostAgg
 {
     public class PostService : IPostService
     {
@@ -42,7 +42,7 @@ namespace MaktabGram.Services.PostAgg
             return postRepository.GetFeedPosts();
         }
 
-        private List<int> SetUserTags(string postTags)
+        public List<int> SetUserTags(string postTags)
         {
             var tags = postTags.Split('#').ToList();
             var userNames = tags.Select(x => x.Trim()).ToList();

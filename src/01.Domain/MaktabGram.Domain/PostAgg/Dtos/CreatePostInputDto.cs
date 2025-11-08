@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace MaktabGram.Domain.PostAgg.Dtos
+namespace MaktabGram.Domain.Core.PostAgg.Dtos
 {
     public class CreatePostInputDto
     {

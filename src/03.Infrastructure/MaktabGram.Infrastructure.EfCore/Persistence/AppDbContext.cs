@@ -1,8 +1,6 @@
-﻿using MaktabGram.Domain.CommentAgg.Entities;
-using MaktabGram.Domain.PostAgg.Entities;
-using MaktabGram.Domain.UserAgg.Entities;
-using MaktabGram.Domain.UserAgg.ValueObjects;
-using MaktabGram.Infrastructure.EfCore.Configurations;
+﻿using MaktabGram.Domain.Core.CommentAgg.Entities;
+using MaktabGram.Domain.Core.PostAgg.Entities;
+using MaktabGram.Domain.Core.UserAgg.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace MaktabGram.Infrastructure.EfCore.Persistence

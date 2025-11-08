@@ -1,7 +1,7 @@
-﻿using MaktabGram.Domain.UserAgg.Enum;
+﻿using MaktabGram.Domain.Core.UserAgg.Enum;
 using Microsoft.AspNetCore.Http;
 
-namespace MaktabGram.Domain.UserAgg.Dtos
+namespace MaktabGram.Domain.Core.UserAgg.Dtos
 {
     public class RegisterUserInputDto
     {

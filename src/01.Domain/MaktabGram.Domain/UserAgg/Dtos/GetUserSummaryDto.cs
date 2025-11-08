@@ -1,4 +1,4 @@
-﻿namespace MaktabGram.Domain.UserAgg.Dtos
+﻿namespace MaktabGram.Domain.Core.UserAgg.Dtos
 {
     public class GetUserSummaryDto
     {

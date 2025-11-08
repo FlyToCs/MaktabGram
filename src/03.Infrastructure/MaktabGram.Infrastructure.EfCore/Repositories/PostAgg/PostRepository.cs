@@ -1,6 +1,6 @@
-﻿using MaktabGram.Domain.PostAgg.Contracts;
-using MaktabGram.Domain.PostAgg.Dtos;
-using MaktabGram.Domain.PostAgg.Entities;
+﻿using MaktabGram.Domain.Core.PostAgg.Contracts;
+using MaktabGram.Domain.Core.PostAgg.Dtos;
+using MaktabGram.Domain.Core.PostAgg.Entities;
 using MaktabGram.Framework;
 using MaktabGram.Infrastructure.EfCore.Persistence;
 using Microsoft.EntityFrameworkCore;

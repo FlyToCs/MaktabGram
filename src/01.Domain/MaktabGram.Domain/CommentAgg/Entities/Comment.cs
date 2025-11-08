@@ -1,8 +1,8 @@
-﻿using MaktabGram.Domain._common.Entities;
-using MaktabGram.Domain.PostAgg.Entities;
-using MaktabGram.Domain.UserAgg.Entities;
+﻿using MaktabGram.Domain.Core._common.Entities;
+using MaktabGram.Domain.Core.PostAgg.Entities;
+using MaktabGram.Domain.Core.UserAgg.Entities;
 
-namespace MaktabGram.Domain.CommentAgg.Entities;
+namespace MaktabGram.Domain.Core.CommentAgg.Entities;
 
 public class Comment : BaseEntity
 {

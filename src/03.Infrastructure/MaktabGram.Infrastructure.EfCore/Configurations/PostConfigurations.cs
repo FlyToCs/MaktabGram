@@ -1,4 +1,4 @@
-﻿using MaktabGram.Domain.PostAgg.Entities;
+﻿using MaktabGram.Domain.Core.PostAgg.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

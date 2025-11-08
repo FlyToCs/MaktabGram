@@ -1,8 +1,6 @@
-﻿using MaktabGram.Domain._common.Entities;
-using MaktabGram.Domain.UserAgg.Dtos;
-using MaktabGram.Domain.UserAgg.Entities;
+﻿using MaktabGram.Domain.Core.UserAgg.Dtos;
 
-namespace MaktabGram.Domain.UserAgg.Contracts
+namespace MaktabGram.Domain.Core.UserAgg.Contracts
 {
     public interface IUserRepository
     {

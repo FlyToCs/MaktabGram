@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MaktabGram.Domain.UserAgg.Enum
+namespace MaktabGram.Domain.Core.UserAgg.Enum
 {
     public enum RoleEnum
     {

@@ -1,11 +1,11 @@
-﻿using MaktabGram.Domain.UserAgg.Entities;
+﻿using MaktabGram.Domain.Core.UserAgg.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MaktabGram.Domain.PostAgg.Entities
+namespace MaktabGram.Domain.Core.PostAgg.Entities
 {
     public class PostTag
     {

@@ -15,8 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\01.Domain\MaktabGram.Domain\MaktabGram.Domain.csproj" />
-    <ProjectReference Include="..\..\02.Services\MaktabGram.Services\MaktabGram.Services.csproj" />
+    <ProjectReference Include="..\..\01.Domain\Services\ApplicationServices\MaktabGram.Domain.ApplicationServices\MaktabGram.Domain.ApplicationServices.csproj" />
   </ItemGroup>
 
 </Project>

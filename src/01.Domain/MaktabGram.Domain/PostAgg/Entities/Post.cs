@@ -1,8 +1,8 @@
-﻿using MaktabGram.Domain._common.Entities;
-using MaktabGram.Domain.CommentAgg.Entities;
-using MaktabGram.Domain.UserAgg.Entities;
+﻿using MaktabGram.Domain.Core._common.Entities;
+using MaktabGram.Domain.Core.CommentAgg.Entities;
+using MaktabGram.Domain.Core.UserAgg.Entities;
 
-namespace MaktabGram.Domain.PostAgg.Entities;
+namespace MaktabGram.Domain.Core.PostAgg.Entities;
 public class Post : BaseEntity
 {
     public string Caption { get; set; }

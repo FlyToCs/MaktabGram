@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace MaktabGram.Domain.UserAgg.ValueObjects;
+namespace MaktabGram.Domain.Core.UserAgg.ValueObjects;
 public class Mobile
 {
     public string Value { get; set; }

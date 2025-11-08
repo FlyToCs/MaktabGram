@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MaktabGram.Domain.UserAgg.Enum
+namespace MaktabGram.Domain.Core.UserAgg.Enum
 {
     public enum GenderEnum
     {

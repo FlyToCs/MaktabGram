@@ -1,23 +1,23 @@
-﻿using MaktabGram.Domain.UserAgg.Contracts;
-using MaktabGram.Domain.UserAgg.Dtos;
-using MaktabGram.Domain.UserAgg.Entities;
-using MaktabGram.Services.UserAgg;
+﻿using MaktabGram.Domain.ApplicationServices.UserAgg;
+using MaktabGram.Domain.Core.UserAgg.Contracts;
+using MaktabGram.Domain.Core.UserAgg.Dtos;
+using MaktabGram.Domain.Services.UserAgg;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MaktabGram.Presentation.MVC.Controllers
 {
     public class UsersController  : Controller
     {
-        private readonly IUserService userService;
+        private readonly IUserApplicationService userApplicationService;
         public UsersController()
         {
-            userService = new UserService();
+            userApplicationService = new UserApplicationService();
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var users = userService.GetUsersSummary();
+            var users = userApplicationService.GetUsersSummary();
 
             return View( users);
         }
@@ -32,13 +32,13 @@ namespace MaktabGram.Presentation.MVC.Controllers
         [HttpPost]
         public IActionResult Create(RegisterUserInputDto model)
         {
-            userService.Register(model);
+            userApplicationService.Register(model);
             return View("Index");
         }
         [HttpGet]
         public IActionResult Active(int userId)
         {
-            userService.Active(userId);
+            userApplicationService.Active(userId);
 
             return RedirectToAction("Index");
         }
@@ -46,7 +46,7 @@ namespace MaktabGram.Presentation.MVC.Controllers
         [HttpGet]
         public IActionResult DeActive(int userId)
         {
-            userService.DeActive(userId);
+            userApplicationService.DeActive(userId);
 
             return RedirectToAction("Index");
         }
@@ -54,7 +54,7 @@ namespace MaktabGram.Presentation.MVC.Controllers
         [HttpGet]
         public IActionResult Update(int userId)
         {
-            var result = userService.GetUpdateUserDetails(userId);
+            var result = userApplicationService.GetUpdateUserDetails(userId);
 
             return View(result);
         }
@@ -62,7 +62,7 @@ namespace MaktabGram.Presentation.MVC.Controllers
         [HttpPost]
         public IActionResult Update(UpdateGetUserDto model)
         {
-            var result = userService.Update(model.Id, model);
+            var result = userApplicationService.Update(model.Id, model);
             if(result.IsSuccess)
             {
                 return RedirectToAction("Index");

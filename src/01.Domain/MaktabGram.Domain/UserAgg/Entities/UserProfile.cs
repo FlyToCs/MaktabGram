@@ -1,7 +1,7 @@
-﻿using MaktabGram.Domain.UserAgg.Enum;
+﻿using MaktabGram.Domain.Core.UserAgg.Enum;
 using System.ComponentModel.DataAnnotations;
 
-namespace MaktabGram.Domain.UserAgg.Entities;
+namespace MaktabGram.Domain.Core.UserAgg.Entities;
 
 public class UserProfile
 {

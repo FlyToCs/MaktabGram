@@ -1,6 +1,6 @@
-﻿using MaktabGram.Domain.CommentAgg.Entities;
+﻿using MaktabGram.Domain.Core.CommentAgg.Entities;
 
-namespace MaktabGram.Domain.PostAgg.Dtos
+namespace MaktabGram.Domain.Core.PostAgg.Dtos
 {
     public class GetPostForFeedsDto
     {

@@ -1,4 +1,4 @@
-﻿namespace MaktabGram.Domain._common.Entities;
+﻿namespace MaktabGram.Domain.Core._common.Entities;
 public class BaseEntity
 {
     public int Id { get; set; }

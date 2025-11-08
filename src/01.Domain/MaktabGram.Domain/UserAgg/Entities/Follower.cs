@@ -1,4 +1,4 @@
-﻿namespace MaktabGram.Domain.UserAgg.Entities;
+﻿namespace MaktabGram.Domain.Core.UserAgg.Entities;
 
 public class Follower
 {

@@ -1,10 +1,9 @@
-﻿using MaktabGram.Domain.PostAgg.Contracts;
-using MaktabGram.Domain.PostAgg.Dtos;
-using MaktabGram.Domain.UserAgg.Contracts;
+﻿using MaktabGram.Domain.ApplicationServices.PostAgg;
+using MaktabGram.Domain.Core.PostAgg.Contracts;
+using MaktabGram.Domain.Core.PostAgg.Dtos;
+using MaktabGram.Domain.Services.PostAgg;
 using MaktabGram.Presentation.MVC.Database;
 using MaktabGram.Presentation.MVC.Models;
-using MaktabGram.Services.PostAgg;
-using MaktabGram.Services.UserAgg;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Principal;
 
@@ -12,15 +11,15 @@ namespace MaktabGram.Presentation.MVC.Controllers
 {
     public class PostController : Controller
     {
-        private readonly IPostService postService;
+        private readonly IPostApplicationService postApplicationService;
 
         public PostController()
         {
-            postService = new PostService();
+            postApplicationService = new PostApplicationService();
         }
         public IActionResult Index()
         {
-            var posts = postService.GetFeedPosts();
+            var posts = postApplicationService.GetFeedPosts();
             return View(posts);
         }
 
@@ -41,7 +40,7 @@ namespace MaktabGram.Presentation.MVC.Controllers
         {
             model.UserId = InMemoryDatabase.OnlineUser.Id;
 
-            var result = postService.Create(model);
+            var result = postApplicationService.Create(model);
 
             if(result.IsSuccess)
             {

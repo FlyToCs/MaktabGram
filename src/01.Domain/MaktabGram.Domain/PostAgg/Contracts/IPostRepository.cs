@@ -1,6 +1,6 @@
-﻿using MaktabGram.Domain.PostAgg.Dtos;
+﻿using MaktabGram.Domain.Core.PostAgg.Dtos;
 
-namespace MaktabGram.Domain.PostAgg.Contracts
+namespace MaktabGram.Domain.Core.PostAgg.Contracts
 {
     public interface IPostRepository
     {

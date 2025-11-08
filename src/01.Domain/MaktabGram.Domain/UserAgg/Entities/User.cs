@@ -1,9 +1,9 @@
-﻿using MaktabGram.Domain._common.Entities;
-using MaktabGram.Domain.CommentAgg.Entities;
-using MaktabGram.Domain.PostAgg.Entities;
-using MaktabGram.Domain.UserAgg.ValueObjects;
+﻿using MaktabGram.Domain.Core._common.Entities;
+using MaktabGram.Domain.Core.CommentAgg.Entities;
+using MaktabGram.Domain.Core.PostAgg.Entities;
+using MaktabGram.Domain.Core.UserAgg.ValueObjects;
 
-namespace MaktabGram.Domain.UserAgg.Entities;
+namespace MaktabGram.Domain.Core.UserAgg.Entities;
 public class User : BaseEntity
 {
     #region Ctor

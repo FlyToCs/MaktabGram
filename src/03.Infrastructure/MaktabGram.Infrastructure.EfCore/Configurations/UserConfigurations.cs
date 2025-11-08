@@ -1,6 +1,4 @@
-﻿using MaktabGram.Domain.UserAgg.Dtos;
-using MaktabGram.Domain.UserAgg.Entities;
-using MaktabGram.Domain.UserAgg.ValueObjects;
+﻿using MaktabGram.Domain.Core.UserAgg.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Reflection.Emit;
