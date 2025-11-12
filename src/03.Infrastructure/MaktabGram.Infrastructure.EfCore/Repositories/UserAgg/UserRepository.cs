@@ -162,12 +162,12 @@ namespace MaktabGram.Infrastructure.EfCore.Repositories.UserAgg
 
         public string GetImageProfileUrl(int userId)
         {
-            var imgAddress =  dbContext.Users
+            var imgAddress = dbContext.Users
                 .Where(u => u.Id == userId)
                 .Select(u => u.Profile.ProfileImageUrl)
                 .FirstOrDefault();
 
-            if(imgAddress is null)
+            if (imgAddress is null)
                 throw new NullReferenceException("Profile image URL not found.");
 
             return imgAddress;
@@ -176,8 +176,60 @@ namespace MaktabGram.Infrastructure.EfCore.Repositories.UserAgg
         public List<int> GetUserIdsBy(List<string> userNames)
         {
             return dbContext.Users
-                .Where(u=> userNames.Contains(u.Username))
+                .Where(u => userNames.Contains(u.Username))
                 .Select(u => u.Id).ToList();
+        }
+
+        public GetUserProfileDto GetProfile(int userId)
+        {
+            var profile = dbContext.Users
+                .Where(u => u.Id == userId)
+                .Select(u => new GetUserProfileDto
+                {
+                    UserName = u.Username,
+                    Bio = u.Profile.Bio,
+                    ImgProfileUrl = u.Profile.ProfileImageUrl,
+                    Posts = u.Posts.Select(p => new GetUserProfilePostDto
+                    {
+                        PostId = p.Id,
+                        CommentCount = p.Comments.Count,
+                        LikeCount = p.PostLikes.Count,
+                        ImgPostUrl = p.ImageUrl
+                    }).ToList(),
+                    SavedPosts = u.SavedPosts.Select(sp => new GetUserProfilePostDto
+                    {
+                        PostId = sp.PostId,
+                        CommentCount = sp.Post.Comments.Count,
+                        LikeCount = sp.Post.PostLikes.Count,
+                        ImgPostUrl = sp.Post.ImageUrl
+                    }).ToList(),
+                    TagPosts = u.TaggedPosts.Select(tp => new GetUserProfilePostDto
+                    {
+                        PostId = tp.PostId,
+                        CommentCount = tp.Post.Comments.Count,
+                        LikeCount = tp.Post.PostLikes.Count,
+                        ImgPostUrl = tp.Post.ImageUrl
+                    }).ToList(),
+                    FollowerCount = u.Followers.Count,
+                    FollowingCount = u.Followings.Count,
+                });
+
+            return profile.FirstOrDefault();
+        }
+
+        public List<SearchResultDto> Search(string username)
+        {
+            var users = dbContext.Users
+                .Where(u => u.Username.Contains(username))
+                .Select(u => new SearchResultDto
+                {
+                    UserId = u.Id,
+                    UserName = u.Username,
+                    ImgProfileUrl = u.Profile.ProfileImageUrl,
+                    IsFollowed = u.Followers.Any(f => f.FollowedId == u.Id)
+                }).ToList();
+
+            return users;
         }
     }
 }

@@ -4,6 +4,7 @@ using MaktabGram.Domain.Core.PostAgg.Entities;
 using MaktabGram.Framework;
 using MaktabGram.Infrastructure.EfCore.Persistence;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 
 namespace MaktabGram.Infrastructure.EfCore.Repositories.PostAgg
@@ -17,9 +18,12 @@ namespace MaktabGram.Infrastructure.EfCore.Repositories.PostAgg
             appDbContext = new AppDbContext();
         }
 
-        public List<GetPostForFeedsDto>GetFeedPosts()
+        public List<GetPostForFeedsDto>GetFeedPosts(int userId)
         {
+
             var posts = appDbContext.Posts.Include(p=>p.Comments).ThenInclude(c=>c.User)
+               .Where(x => x.User.Followers.Any(x => x.FollowerId == userId))
+                .OrderByDescending(x => x.CreatedAt)
                 .Select(p => new GetPostForFeedsDto
             {
                 Caption = p.Caption,
@@ -54,5 +58,6 @@ namespace MaktabGram.Infrastructure.EfCore.Repositories.PostAgg
 
             return post.Id;
         }
+
     }
 }

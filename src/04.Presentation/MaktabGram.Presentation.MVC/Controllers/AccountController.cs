@@ -29,19 +29,20 @@ namespace MaktabGram.Presentation.MVC.Controllers
 
             if (loginResullt.IsSuccess)
             {
+
+                InMemoryDatabase.OnlineUser = new OnlineUser
+                {
+                    Id = loginResullt.Data.Id,
+                    IsAdmin = loginResullt.Data.IsAdmin,
+                    Username = loginResullt.Data.Username
+                };
+
                 if (loginResullt.Data!.IsAdmin)
                 {
-                    InMemoryDatabase.OnlineUser = new OnlineUser
-                    {
-                        Id = loginResullt.Data.Id,
-                        IsAdmin = loginResullt.Data.IsAdmin,
-                        Username = loginResullt.Data.Username
-                    };
-                     
                     return RedirectToAction("Index", "Admin");
                 }
                 {
-                    // Redirect to profile
+                    return RedirectToAction("Index", "Post");
                 }
             }
             else
@@ -84,5 +85,36 @@ namespace MaktabGram.Presentation.MVC.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            var userId = 3; // InMemoryDatabase.OnlineUser.Id;
+            var profile = userApplicationService.GetProfile(userId);
+
+            if(profile is null)
+            {
+                //...........
+            }
+
+            return View(profile);
+        }
+
+        [HttpGet]
+        public IActionResult Search()
+        {
+            return View();
+        }
+
+        [HttpPost]  
+        public IActionResult Search(string username)
+        {
+            var userId = 3;
+
+            var results = userApplicationService.Search(username);
+            return View(results);
+        }
+
+
     }
 }

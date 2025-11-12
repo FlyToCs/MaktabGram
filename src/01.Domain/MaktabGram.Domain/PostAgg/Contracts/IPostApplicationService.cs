@@ -11,6 +11,6 @@ namespace MaktabGram.Domain.Core.PostAgg.Contracts
     public interface IPostApplicationService
     {
         Result<bool> Create(CreatePostInputDto model);
-        public List<GetPostForFeedsDto> GetFeedPosts();
+        public List<GetPostForFeedsDto> GetFeedPosts(int userId);
     }
 }

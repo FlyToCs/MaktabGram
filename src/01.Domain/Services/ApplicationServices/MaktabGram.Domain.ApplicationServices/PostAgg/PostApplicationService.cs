@@ -32,9 +32,9 @@ namespace MaktabGram.Domain.ApplicationServices.PostAgg
                 return Result<bool>.Failure("ایجاد پست با خطا روبرو شد.");
             }
         }
-        public List<GetPostForFeedsDto> GetFeedPosts()
+        public List<GetPostForFeedsDto> GetFeedPosts(int userId)
         {
-           return _postService.GetFeedPosts();
+           return _postService.GetFeedPosts(userId);
         }
     }
 }

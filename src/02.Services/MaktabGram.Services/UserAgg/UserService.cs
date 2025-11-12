@@ -80,5 +80,15 @@ namespace MaktabGram.Domain.Services.UserAgg
 
             return Result<bool>.Success("ثبت نام با موفقیت انجام شد.");
         }
+
+        public GetUserProfileDto GetProfile(int userId)
+        {
+            return userRepository.GetProfile(userId);
+        }
+
+        public List<SearchResultDto> Search(string username)
+        {
+            return userRepository.Search(username);
+        }
     }
 }

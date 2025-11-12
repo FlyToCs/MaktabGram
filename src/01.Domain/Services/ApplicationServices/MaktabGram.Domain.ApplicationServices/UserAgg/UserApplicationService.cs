@@ -30,6 +30,11 @@ namespace MaktabGram.Domain.ApplicationServices.UserAgg
             userService.DeActive(userId);
         }
 
+        public GetUserProfileDto GetProfile(int userId)
+        {
+            return userService.GetProfile(userId);
+        }
+
         public UpdateGetUserDto GetUpdateUserDetails(int userId)
         {
             return userService.GetUpdateUserDetails(userId);
@@ -66,6 +71,11 @@ namespace MaktabGram.Domain.ApplicationServices.UserAgg
         public Result<bool> Update(int userId, UpdateGetUserDto model)
         {
             return userService.Update(userId,model );
+        }
+
+        public List<SearchResultDto> Search(string username)
+        {
+            return userService.Search(username);
         }
     }
 }

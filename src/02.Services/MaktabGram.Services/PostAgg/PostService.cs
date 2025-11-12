@@ -3,6 +3,7 @@ using MaktabGram.Domain.Core.FileAgg;
 using MaktabGram.Domain.Core.PostAgg.Contracts;
 using MaktabGram.Domain.Core.PostAgg.Dtos;
 using MaktabGram.Domain.Core.UserAgg.Contracts;
+using MaktabGram.Domain.Core.UserAgg.Dtos;
 using MaktabGram.Domain.Services.FileAgg.Service;
 using MaktabGram.Infrastructure.EfCore.Repositories.PostAgg;
 using MaktabGram.Infrastructure.EfCore.Repositories.UserAgg;
@@ -25,7 +26,6 @@ namespace MaktabGram.Domain.Services.PostAgg
         {
             try
             {
-                throw new Exception();
                 model.ImgUrl = fileService.Upload(model.Img, "Posts");
                 model.TaggedUsers = SetUserTags(model.Tags);
                 var postId = postRepository.Create(model);
@@ -37,10 +37,11 @@ namespace MaktabGram.Domain.Services.PostAgg
             }
         }
 
-        public List<GetPostForFeedsDto> GetFeedPosts()
+        public List<GetPostForFeedsDto> GetFeedPosts(int userId)
         {
-            return postRepository.GetFeedPosts();
+            return postRepository.GetFeedPosts(userId);
         }
+
 
         public List<int> SetUserTags(string postTags)
         {

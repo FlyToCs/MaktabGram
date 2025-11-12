@@ -19,7 +19,9 @@ namespace MaktabGram.Presentation.MVC.Controllers
         }
         public IActionResult Index()
         {
-            var posts = postApplicationService.GetFeedPosts();
+            var userId = Database.InMemoryDatabase.OnlineUser.Id;
+
+            var posts = postApplicationService.GetFeedPosts(userId);
             return View(posts);
         }
 
