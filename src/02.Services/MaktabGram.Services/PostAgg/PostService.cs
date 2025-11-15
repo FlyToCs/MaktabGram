@@ -1,27 +1,16 @@
 ﻿using MaktabGram.Domain.Core._common.Entities;
-using MaktabGram.Domain.Core.FileAgg;
 using MaktabGram.Domain.Core.PostAgg.Contracts;
 using MaktabGram.Domain.Core.PostAgg.Dtos;
 using MaktabGram.Domain.Core.UserAgg.Contracts;
-using MaktabGram.Domain.Core.UserAgg.Dtos;
-using MaktabGram.Domain.Services.FileAgg.Service;
-using MaktabGram.Infrastructure.EfCore.Repositories.PostAgg;
-using MaktabGram.Infrastructure.EfCore.Repositories.UserAgg;
-using System.Net;
+using MaktabGram.Infrastructure.FileService.Contracts;
 
 namespace MaktabGram.Domain.Services.PostAgg
 {
-    public class PostService : IPostService
+    public class PostService(IPostRepository postRepository,
+        IUserRepository userRepository,
+        IFileService fileService) : IPostService
     {
-        private readonly IFileService fileService;
-        private readonly IPostRepository postRepository;
-        private readonly IUserRepository userRepository;
-        public PostService()
-        {
-            fileService = new FileService();
-            postRepository = new PostRepository();
-            userRepository = new UserRepository();
-        }
+
         public Result<bool> Create(CreatePostInputDto model)
         {
             try
@@ -31,7 +20,7 @@ namespace MaktabGram.Domain.Services.PostAgg
                 var postId = postRepository.Create(model);
                 return Result<bool>.Success("پست با موفقیت ذخیره شد.");
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return Result<bool>.Failure("ایجاد پست با خطا روبرو شد.");
             }

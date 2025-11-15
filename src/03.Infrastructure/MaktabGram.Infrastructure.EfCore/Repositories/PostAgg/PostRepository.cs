@@ -9,14 +9,8 @@ using System.Linq;
 
 namespace MaktabGram.Infrastructure.EfCore.Repositories.PostAgg
 {
-    public class PostRepository : IPostRepository
+    public class PostRepository(AppDbContext appDbContext) : IPostRepository
     {
-        private readonly AppDbContext appDbContext;
-
-        public PostRepository()
-        {
-            appDbContext = new AppDbContext();
-        }
 
         public List<GetPostForFeedsDto>GetFeedPosts(int userId)
         {

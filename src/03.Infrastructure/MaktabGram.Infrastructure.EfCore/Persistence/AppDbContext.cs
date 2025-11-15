@@ -1,4 +1,5 @@
 ﻿using MaktabGram.Domain.Core.CommentAgg.Entities;
+using MaktabGram.Domain.Core.FollowerAgg.Entities;
 using MaktabGram.Domain.Core.PostAgg.Entities;
 using MaktabGram.Domain.Core.UserAgg.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -7,9 +8,14 @@ namespace MaktabGram.Infrastructure.EfCore.Persistence
 {
     public class AppDbContext : DbContext
     {
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+
+        }
+
         public DbSet<Post> Posts { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Follower> Follows { get; set; }
+        public DbSet<Follower> Followers { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<PostLike> PostLikes { get; set; }
         public DbSet<UserProfile> UserProfile { get; set; }
@@ -17,7 +23,6 @@ namespace MaktabGram.Infrastructure.EfCore.Persistence
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost;Database=MaktabGramDb;user id=sa;password=25915491;trust server certificate=true");
             base.OnConfiguring(optionsBuilder);
         }
 

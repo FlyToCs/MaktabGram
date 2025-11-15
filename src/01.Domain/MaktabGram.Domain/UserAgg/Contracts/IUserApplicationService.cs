@@ -18,6 +18,6 @@ namespace MaktabGram.Domain.Core.UserAgg.Contracts
         public void DeActive(int userId);
         public Result<bool> Update(int userId, UpdateGetUserDto model);
         public GetUserProfileDto GetProfile(int userId);
-        public List<SearchResultDto> Search(string username);
+        public List<SearchResultDto> Search(string username, int userId);
     }
 }

@@ -108,15 +108,15 @@
 
                         @if (user.IsFollowed)
                         {
-                            <button class="primary-button text-sm font-semibold py-1.5 px-4 rounded-lg follow-btn" onclick="toggleFollow(this)">
+                            <a asp-action="UnFollow" asp-route-id="@user.UserId" class="primary-button text-sm font-semibold py-1.5 px-4 rounded-lg follow-btn">
                                 UnFollow
-                            </button>
+                            </a>
                         }
                         else
                         {
-                            <button class="primary-button text-sm font-semibold py-1.5 px-4 rounded-lg follow-btn" onclick="toggleFollow(this)">
+                            <a asp-action="Follow" asp-route-id="@user.UserId" class="primary-button text-sm font-semibold py-1.5 px-4 rounded-lg follow-btn">
                                 Follow
-                            </button>
+                            </a>
                         }
 
                     </div>

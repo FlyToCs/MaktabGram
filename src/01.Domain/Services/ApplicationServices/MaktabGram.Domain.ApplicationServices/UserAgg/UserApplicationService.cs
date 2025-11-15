@@ -1,25 +1,17 @@
-﻿using MaktabGram.Domain.Core._common.Entities;
-using MaktabGram.Domain.Core.FileAgg;
-using MaktabGram.Domain.Core.UserAgg.Contracts;
-using MaktabGram.Domain.Core.UserAgg.Dtos;
-using MaktabGram.Domain.Services.FileAgg.Service;
+﻿using MaktabGram.Framework;
 using MaktabGram.Domain.Services.UserAgg;
-using MaktabGram.Framework;
-using MaktabGram.Infrastructure.EfCore.Repositories.UserAgg;
+using MaktabGram.Domain.Core.UserAgg.Dtos;
+using MaktabGram.Domain.Core._common.Entities;
+using MaktabGram.Domain.Core.UserAgg.Contracts;
+using MaktabGram.Infrastructure.FileService.Services;
+using MaktabGram.Infrastructure.FileService.Contracts;
 
 
 namespace MaktabGram.Domain.ApplicationServices.UserAgg
 {
-    public class UserApplicationService : IUserApplicationService
+    public class UserApplicationService(IUserService userService,
+        IFileService fileService) : IUserApplicationService
     {
-        private readonly IUserService userService;
-        private readonly IFileService fileService;
-
-        public UserApplicationService()
-        {
-            userService = new UserService();
-            fileService = new FileService();
-        }
         public void Active(int userId)
         {
             userService.Active(userId);
@@ -70,12 +62,12 @@ namespace MaktabGram.Domain.ApplicationServices.UserAgg
 
         public Result<bool> Update(int userId, UpdateGetUserDto model)
         {
-            return userService.Update(userId,model );
+            return userService.Update(userId, model);
         }
 
-        public List<SearchResultDto> Search(string username)
+        public List<SearchResultDto> Search(string username, int userId)
         {
-            return userService.Search(username);
+            return userService.Search(username, userId);
         }
     }
 }

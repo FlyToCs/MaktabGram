@@ -1,23 +1,13 @@
-﻿using MaktabGram.Domain.Core._common.Entities;
-using MaktabGram.Domain.Core.FileAgg;
-using MaktabGram.Domain.Core.UserAgg.Contracts;
+﻿using MaktabGram.Framework;
 using MaktabGram.Domain.Core.UserAgg.Dtos;
-using MaktabGram.Domain.Services.FileAgg.Service;
-using MaktabGram.Framework;
-using MaktabGram.Infrastructure.EfCore.Repositories.UserAgg;
+using MaktabGram.Domain.Core._common.Entities;
+using MaktabGram.Domain.Core.UserAgg.Contracts;
+using MaktabGram.Infrastructure.FileService.Contracts;
 
 namespace MaktabGram.Domain.Services.UserAgg
 {
-    public class UserService : IUserService
+    public class UserService (IUserRepository userRepository , IFileService fileService) : IUserService
     {
-        private readonly IUserRepository userRepository;
-        private readonly IFileService fileService;
-        public UserService()
-        {
-            userRepository = new UserRepository();
-            fileService = new FileService();
-        }
-
         public List<GetUserSummaryDto> GetUsersSummary()
         {
             var users = userRepository.GetUsersSummary();
@@ -86,9 +76,9 @@ namespace MaktabGram.Domain.Services.UserAgg
             return userRepository.GetProfile(userId);
         }
 
-        public List<SearchResultDto> Search(string username)
+        public List<SearchResultDto> Search(string username,int userId)
         {
-            return userRepository.Search(username);
+            return userRepository.Search(username,userId);
         }
     }
 }

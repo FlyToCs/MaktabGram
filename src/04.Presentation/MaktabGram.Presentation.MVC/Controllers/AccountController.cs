@@ -1,4 +1,6 @@
-﻿using MaktabGram.Domain.ApplicationServices.UserAgg;
+﻿using MaktabGram.Domain.ApplicationServices.FollowAgg;
+using MaktabGram.Domain.ApplicationServices.UserAgg;
+using MaktabGram.Domain.Core.FollowerAgg.Contracts;
 using MaktabGram.Domain.Core.UserAgg.Contracts;
 using MaktabGram.Domain.Core.UserAgg.Dtos;
 using MaktabGram.Presentation.MVC.Database;
@@ -10,10 +12,12 @@ namespace MaktabGram.Presentation.MVC.Controllers
     public class AccountController : Controller
     {
         private readonly IUserApplicationService userApplicationService;
+        private readonly IFollowerApplicationService followApplicationService;
 
         public AccountController()
         {
             userApplicationService = new UserApplicationService();
+            followApplicationService  = new FollowerApplicationService();
         }
 
         [HttpGet]
@@ -92,7 +96,7 @@ namespace MaktabGram.Presentation.MVC.Controllers
             var userId = 3; // InMemoryDatabase.OnlineUser.Id;
             var profile = userApplicationService.GetProfile(userId);
 
-            if(profile is null)
+            if (profile is null)
             {
                 //...........
             }
@@ -103,16 +107,35 @@ namespace MaktabGram.Presentation.MVC.Controllers
         [HttpGet]
         public IActionResult Search()
         {
-            return View();
+            var userId = 3;
+
+            var results = userApplicationService.Search(string.Empty, userId);
+            return View(results);
         }
 
-        [HttpPost]  
+        [HttpPost]
         public IActionResult Search(string username)
         {
             var userId = 3;
 
-            var results = userApplicationService.Search(username);
+            var results = userApplicationService.Search(username, userId);
             return View(results);
+        }
+
+
+        public IActionResult Follow(int id)
+        {
+            var userId = 3;
+            followApplicationService.Follow(userId, id);
+
+            return RedirectToAction("Search");
+        }
+
+        public IActionResult UnFollow(int id)
+        {
+            var userId = 3;
+            followApplicationService.UnFollow(3, id);
+            return RedirectToAction("Search");
         }
 
 

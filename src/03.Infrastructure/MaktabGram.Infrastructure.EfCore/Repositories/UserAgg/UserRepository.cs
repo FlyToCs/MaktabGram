@@ -7,13 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MaktabGram.Infrastructure.EfCore.Repositories.UserAgg
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository (AppDbContext dbContext) : IUserRepository
     {
-        private readonly AppDbContext dbContext;
-        public UserRepository()
-        {
-            dbContext = new AppDbContext();
-        }
 
         public void Active(int userId)
         {
@@ -217,19 +212,23 @@ namespace MaktabGram.Infrastructure.EfCore.Repositories.UserAgg
             return profile.FirstOrDefault();
         }
 
-        public List<SearchResultDto> Search(string username)
+        public List<SearchResultDto> Search(string username , int userId)
         {
-            var users = dbContext.Users
-                .Where(u => u.Username.Contains(username))
+            var query = dbContext.Users.OrderByDescending(x => x.CreatedAt)
                 .Select(u => new SearchResultDto
                 {
                     UserId = u.Id,
                     UserName = u.Username,
                     ImgProfileUrl = u.Profile.ProfileImageUrl,
-                    IsFollowed = u.Followers.Any(f => f.FollowedId == u.Id)
-                }).ToList();
+                    IsFollowed = u.Followers.Any(f => f.FollowerId == userId)
+                }).Take(10);
 
-            return users;
+            if(!string.IsNullOrEmpty(username))
+            {
+                query = query.Where(u => u.UserName.Contains(username));
+            }
+
+            return query.ToList();
         }
     }
 }

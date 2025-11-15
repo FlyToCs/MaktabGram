@@ -1,8 +1,8 @@
-﻿using MaktabGram.Domain.Core.FileAgg;
+﻿using MaktabGram.Infrastructure.FileService.Contracts;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
-namespace MaktabGram.Domain.Services.FileAgg.Service
+namespace MaktabGram.Infrastructure.FileService.Services
 {
     public class FileService : IFileService
     {

@@ -17,6 +17,6 @@ namespace MaktabGram.Domain.Core.UserAgg.Contracts
         public string GetImageProfileUrl(int userId);
         public List<int> GetUserIdsBy(List<string> userNames);
         public GetUserProfileDto GetProfile(int userId);
-        public List<SearchResultDto> Search(string username);
+        public List<SearchResultDto> Search(string username, int userId);
     }
 }
