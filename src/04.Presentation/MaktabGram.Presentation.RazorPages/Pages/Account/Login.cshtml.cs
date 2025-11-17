@@ -6,28 +6,31 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MaktabGram.Presentation.RazorPages.Pages.Account
 {
-    public class ViewModel
+    public class LoginViewModel
     {
         public string Mobile { get; set; }
         public string Password { get; set; }
     }
 
-    public class LoginModel (IUserApplicationService userApplicationService,ICookieService cookieService) : BasePageModel
+    public class LoginModel(IUserApplicationService userApplicationService, ICookieService cookieService) : BasePageModel
     {
         [BindProperty]
-        public ViewModel Model { get; set; }
+        public LoginViewModel Model { get; set; }
         public string Message { get; set; }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            if (UserIsLoggedIn())
+            {
+                 return RedirectToPage("/Account/Profile");
+            }
 
+            return Page();
         }
 
         public IActionResult OnPost()
         {
             var loginResullt = userApplicationService.Login(Model.Mobile, Model.Password);
-
-            var userid = GetUserId();
 
             if (loginResullt.IsSuccess)
             {
@@ -36,13 +39,7 @@ namespace MaktabGram.Presentation.RazorPages.Pages.Account
                 cookieService.Set("IsAdmin", loginResullt.Data.IsAdmin ? "1" : "0");
                 cookieService.Set("Username", loginResullt.Data.Username);
 
-                if (loginResullt.Data!.IsAdmin)
-                {
-                    return RedirectToAction("Index", "Admin");
-                }
-                {
-                    return RedirectToAction("Index", "Post");
-                }
+                return RedirectToPage("/Account/Profile");
             }
             else
             {

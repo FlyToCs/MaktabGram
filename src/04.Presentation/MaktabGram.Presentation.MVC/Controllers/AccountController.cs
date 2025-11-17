@@ -14,11 +14,6 @@ namespace MaktabGram.Presentation.MVC.Controllers
         private readonly IUserApplicationService userApplicationService;
         private readonly IFollowerApplicationService followApplicationService;
 
-        public AccountController()
-        {
-            userApplicationService = new UserApplicationService();
-            followApplicationService  = new FollowerApplicationService();
-        }
 
         [HttpGet]
         public IActionResult Login()

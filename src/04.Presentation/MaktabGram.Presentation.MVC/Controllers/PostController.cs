@@ -13,10 +13,7 @@ namespace MaktabGram.Presentation.MVC.Controllers
     {
         private readonly IPostApplicationService postApplicationService;
 
-        public PostController()
-        {
-            postApplicationService = new PostApplicationService();
-        }
+
         public IActionResult Index()
         {
             var userId = Database.InMemoryDatabase.OnlineUser.Id;
