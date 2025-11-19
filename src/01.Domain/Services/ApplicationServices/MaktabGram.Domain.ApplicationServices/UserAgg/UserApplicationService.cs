@@ -69,5 +69,10 @@ namespace MaktabGram.Domain.ApplicationServices.UserAgg
         {
             return userService.Search(username, userId);
         }
+
+        public string GetImageProfileUrl(int userId)
+        {
+            return userService.GetImageProfileUrl(userId);
+        }
     }
 }

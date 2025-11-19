@@ -2,6 +2,7 @@
 using MaktabGram.Domain.Core.PostAgg.Contracts;
 using MaktabGram.Domain.Core.PostAgg.Dtos;
 using MaktabGram.Domain.Services.PostAgg;
+using MaktabGram.Infrastructure.EfCore.Repositories.PostAgg;
 using MaktabGram.Infrastructure.FileService.Contracts;
 using MaktabGram.Infrastructure.FileService.Services;
 
@@ -25,9 +26,29 @@ namespace MaktabGram.Domain.ApplicationServices.PostAgg
                 return Result<bool>.Failure("ایجاد پست با خطا روبرو شد.");
             }
         }
-        public List<GetPostForFeedsDto> GetFeedPosts(int userId)
+        public List<GetPostForFeedsDto> GetFeedPosts(int userId,int page , int pageSize)
         {
-           return postService.GetFeedPosts(userId);
+           return postService.GetFeedPosts(userId,page,pageSize);
+        }
+
+        public int GetPostCount(int userId)
+        {
+            return postService.GetPostCount(userId);
+        }
+
+        public void Like(int userId, int PostId)
+        {
+            postService.Like(userId, PostId);
+        }
+
+        public bool UserLikePost(int userId, int PostId)
+        {
+            return postService.UserLikePost(userId, PostId);
+        }
+
+        public void DisLike(int userId, int PostId)
+        {
+            postService.DisLike(userId, PostId);
         }
     }
 }

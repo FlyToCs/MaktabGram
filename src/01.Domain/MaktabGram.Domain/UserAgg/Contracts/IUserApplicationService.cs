@@ -19,5 +19,6 @@ namespace MaktabGram.Domain.Core.UserAgg.Contracts
         public Result<bool> Update(int userId, UpdateGetUserDto model);
         public GetUserProfileDto GetProfile(int userId);
         public List<SearchResultDto> Search(string username, int userId);
+        public string GetImageProfileUrl(int userId);
     }
 }

@@ -4,6 +4,7 @@ namespace MaktabGram.Domain.Core.PostAgg.Dtos
 {
     public class GetPostForFeedsDto
     {
+        public int Id { get; set; }
         public string Username { get; set; }
         public string? ProfileImgUrl { get; set; }
         public string ImgPostUrl { get; set; }
@@ -11,5 +12,6 @@ namespace MaktabGram.Domain.Core.PostAgg.Dtos
         public string Caption { get; set; }
         public string CreateAt { get; set; }
         public List<Comment> Comments { get; set; }
+        public bool UserLikeThisPost { get; set; }
     }
 }

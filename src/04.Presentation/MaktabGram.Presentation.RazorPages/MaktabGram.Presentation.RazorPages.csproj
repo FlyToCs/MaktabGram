@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\01.Domain\Services\ApplicationServices\MaktabGram.Domain.ApplicationServices\MaktabGram.Domain.ApplicationServices.csproj" />
     <ProjectReference Include="..\..\02.Services\MaktabGram.Services\MaktabGram.Domain.Services.csproj" />
     <ProjectReference Include="..\..\03.Infrastructure\MaktabGram.Infrastructure.EfCore\MaktabGram.Infrastructure.EfCore.csproj" />

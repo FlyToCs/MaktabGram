@@ -11,6 +11,10 @@ namespace MaktabGram.Domain.Core.PostAgg.Contracts
     public interface IPostApplicationService
     {
         Result<bool> Create(CreatePostInputDto model);
-        public List<GetPostForFeedsDto> GetFeedPosts(int userId);
+        public List<GetPostForFeedsDto> GetFeedPosts(int userId, int page, int pageSize);
+        public int GetPostCount(int userId);
+        public void Like(int userId, int PostId);
+        public bool UserLikePost(int userId, int PostId);
+        public void DisLike(int userId, int PostId);
     }
 }
