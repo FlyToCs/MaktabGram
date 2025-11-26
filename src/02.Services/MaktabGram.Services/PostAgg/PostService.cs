@@ -59,5 +59,10 @@ namespace MaktabGram.Domain.Services.PostAgg
         {
              postRepository.DisLike(userId, PostId);
         }
+
+        public GetPostDetailsDto? GetPostDetails(int postId)
+        {
+            return postRepository.GetPostDetails(postId);
+        }
     }
 }

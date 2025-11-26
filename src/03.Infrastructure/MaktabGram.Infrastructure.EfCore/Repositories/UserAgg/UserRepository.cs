@@ -1,4 +1,5 @@
-﻿using MaktabGram.Domain.Core.UserAgg.Contracts;
+﻿using MaktabGram.Domain.Core.PostAgg.Entities;
+using MaktabGram.Domain.Core.UserAgg.Contracts;
 using MaktabGram.Domain.Core.UserAgg.Dtos;
 using MaktabGram.Domain.Core.UserAgg.Entities;
 using MaktabGram.Domain.Core.UserAgg.ValueObjects;
@@ -175,15 +176,36 @@ namespace MaktabGram.Infrastructure.EfCore.Repositories.UserAgg
                 .Select(u => u.Id).ToList();
         }
 
-        public GetUserProfileDto GetProfile(int userId)
+        public GetUserProfileDto GetProfile(int searchedUserId)
         {
             var profile = dbContext.Users
-                .Where(u => u.Id == userId)
+                .Where(u => u.Id == searchedUserId)
                 .Select(u => new GetUserProfileDto
                 {
+                    Id = u.Id,
                     UserName = u.Username,
                     Bio = u.Profile.Bio,
                     ImgProfileUrl = u.Profile.ProfileImageUrl,
+                    FollowerCount = u.Followers.Count,
+                    FollowingCount = u.Followings.Count,
+                });
+
+           
+            return profile.FirstOrDefault();
+        }
+
+        public GetUserProfileDto GetProfileWithPosts(int searchedUserId, int curentUserId)
+        {
+            var profile = dbContext.Users
+                .Where(u => u.Id == searchedUserId)
+                .Select(u => new GetUserProfileDto
+                {
+                    Id = u.Id,
+                    UserName = u.Username,
+                    Bio = u.Profile.Bio,
+                    ImgProfileUrl = u.Profile.ProfileImageUrl,
+                    FollowerCount = u.Followers.Count,
+                    FollowingCount = u.Followings.Count,
                     Posts = u.Posts.Select(p => new GetUserProfilePostDto
                     {
                         PostId = p.Id,
@@ -205,10 +227,9 @@ namespace MaktabGram.Infrastructure.EfCore.Repositories.UserAgg
                         LikeCount = tp.Post.PostLikes.Count,
                         ImgPostUrl = tp.Post.ImageUrl
                     }).ToList(),
-                    FollowerCount = u.Followers.Count,
-                    FollowingCount = u.Followings.Count,
                 });
 
+           
             return profile.FirstOrDefault();
         }
 
@@ -229,6 +250,11 @@ namespace MaktabGram.Infrastructure.EfCore.Repositories.UserAgg
             }
 
             return query.ToList();
+        }
+
+        public bool IsFolllow(int searchedUserId, int curentUserId)
+        {
+            return dbContext.Followers.Any(f => f.FollowerId == curentUserId && f.FollowedId == searchedUserId);
         }
     }
 }

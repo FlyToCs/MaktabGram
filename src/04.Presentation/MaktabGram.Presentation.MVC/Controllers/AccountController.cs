@@ -89,7 +89,7 @@ namespace MaktabGram.Presentation.MVC.Controllers
         public IActionResult Profile()
         {
             var userId = 3; // InMemoryDatabase.OnlineUser.Id;
-            var profile = userApplicationService.GetProfile(userId);
+            var profile = userApplicationService.GetProfile(userId,0);
 
             if (profile is null)
             {

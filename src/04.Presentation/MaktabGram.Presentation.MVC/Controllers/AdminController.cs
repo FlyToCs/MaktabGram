@@ -9,10 +9,6 @@ namespace MaktabGram.Presentation.MVC.Controllers
     public class AdminController : Controller
     {
         private readonly IUserApplicationService userApplicationService;
-        public AdminController()
-        {
-            userApplicationService = new UserApplicationService();
-        }
 
         public IActionResult Index()
         {

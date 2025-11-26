@@ -31,7 +31,16 @@
 
                 <div class="flex justify-center md:justify-start gap-10 mb-6 text-center">
                     <div>
-                        <p class="text-2xl font-bold">@Model.Profile.Posts.Count</p>
+                        <p class="text-2xl font-bold">
+                            @if (@Model.Profile.Posts is not null)
+                            {
+                                @Model.Profile.Posts.Count
+                            }
+                            else
+                            {
+                                @(0)
+                            }
+                        </p>
                         <p class="text-sm text-gray-600">پست</p>
                     </div>
                     <div>
@@ -55,6 +64,21 @@
                     <a href="/Messages/@Model.Profile.UserName" class="px-8 py-2.5 bg-gray-200 text-gray-800 rounded-lg font-semibold text-sm hover:bg-gray-300 transition">
                         پیام
                     </a>
+
+                    @if (!Model.Profile.IsFollower)
+                    {
+                        <a asp-page-handler="Follow" asp-route-id="@Model.Profile.Id" class="btn btn-success">
+                            دنبال کردن
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-page-handler="UnFollow" asp-route-id="@Model.Profile.Id" class="btn btn-danger">
+                            دنبال نکردن
+                        </a>
+                    }
+
+
                     <button class="p-2.5 bg-gray-200 rounded-lg hover:bg-gray-300 transition">
                         <i data-lucide="settings" class="w-5 h-5 text-gray-700"></i>
                     </button>
@@ -84,109 +108,124 @@
         </div>
     </div>
 
-    <!-- محتوای تب‌ها -->
-    <div class="mt-6">
-        <!-- تب پست‌ها -->
-        <div id="posts" class="tab-content">
-            @if (Model.Profile.Posts.Any())
-            {
-                <div class="grid grid-cols-3 gap-1 md:gap-4">
-                    @foreach (var post in Model.Profile.Posts)
-                    {
-                        <a href="/Post/@post.PostId" class="aspect-square relative group overflow-hidden rounded-lg">
-                            <img src="/@post.ImgPostUrl" alt="پست" class="w-full h-full object-cover transition-transform group-hover:scale-110 duration-300">
-                            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-                                <div class Uly-white flex gap-6 text-lg font-bold">
-                                    <span class="flex items-center gap-2">
-                                        <i data-lucide="heart" class="w-6 h-6 fill-white"></i> @post.LikeCount
-                                    </span>
-                                    <span class="flex items-center gap-2">
-                                        <i data-lucide="message-circle" class="w-6 h-6 fill-white"></i> @post.CommentCount
-                                    </span>
-                                </div>
-                            </div>
-                        </a>
-                    }
-                </div>
-            }
-            else
-            {
-                <div class="text-center py-20">
-                    <i data-lucide="camera-off" class="w-20 h-20 text-gray-300 mx-auto mb-4"></i>
-                    <p class="text-xl font-medium text-gray-600">هنوز پستی منتشر نشده</p>
-                </div>
-            }
-        </div>
+    @if (Model.Profile.IsFollower)
+    {
+        <!-- محتوای تب‌ها -->
+        <div class="mt-6">
+            <!-- تب پست‌ها -->
+            <div id="posts" class="tab-content">
+                @if (Model.Profile.Posts is not null)
+                {
+                    <div class="grid grid-cols-3 gap-1 md:gap-4">
+                        @foreach (var post in Model.Profile.Posts)
+                        {
+                            <a asp-page="/Posts/Details" asp-route-id="@post.PostId" class="aspect-square relative group overflow-hidden rounded-lg">
 
-        <!-- تب ذخیره‌شده -->
-        <div id="saved" class="tab-content hidden">
-            @if (Model.Profile.SavedPosts?.Any() == true)
-            {
-                <div class="grid grid-cols-3 gap-1 md:gap-4">
-                    @foreach (var post in Model.Profile.SavedPosts)
-                    {
-                        <a href="/Post/@post.PostId" class="aspect-square relative group overflow-hidden rounded-lg">
-                            <img src="/@post.ImgPostUrl" alt="ذخیره شده" class="w-full h-full object-cover transition-transform group-hover:scale-110 duration-300">
-                            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-                                <div class="text-white flex gap-6 text-lg font-bold">
-                                    <span class="flex items-center gap-2">
-                                        <i data-lucide="heart" class="w-6 h-6 fill-white"></i> @post.LikeCount
-                                    </span>
-                                    <span class="flex items-center gap-2">
-                                        <i data-lucide="message-circle" class="w-6 h-6 fill-white"></i> @post.CommentCount
-                                    </span>
+                                    <img src="/@post.ImgPostUrl" alt="پست" class="w-full h-full object-cover transition-transform group-hover:scale-110 duration-300">
+                                
+                                <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                                    <div class Uly-white flex gap-6 text-lg font-bold">
+                                        <span class="flex items-center gap-2">
+                                            <i data-lucide="heart" class="w-6 h-6 fill-white"></i> @post.LikeCount
+                                        </span>
+                                        <span class="flex items-center gap-2">
+                                            <i data-lucide="message-circle" class="w-6 h-6 fill-white"></i> @post.CommentCount
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    }
-                </div>
-            }
-            else
-            {
-                <div class="text-center py-20">
-                    <i data-lucide="bookmark" class="w-20 h-20 text-gray-300 mx-auto mb-4"></i>
-                    <p class="text-xl font-medium text-gray-600">هیچ پستی ذخیره نشده</p>
-                    <p class="text-sm text-gray-500 mt-2">وقتی پستی رو ذخیره کنی، اینجا نمایش داده میشه</p>
-                </div>
-            }
-        </div>
+                            </a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-20">
+                        <i data-lucide="camera-off" class="w-20 h-20 text-gray-300 mx-auto mb-4"></i>
+                        <p class="text-xl font-medium text-gray-600">هنوز پستی منتشر نشده</p>
+                    </div>
+                }
+            </div>
 
-        <!-- تب تگ‌شده -->
-        <div id="tagged" class="tab-content hidden">
-            @if (Model.Profile.TagPosts?.Any() == true)
-            {
-                <div class="grid grid-cols-3 gap-1 md:gap-4">
-                    @foreach (var post in Model.Profile.TagPosts)
-                    {
-                        <a href="/Post/@post.PostId" class="aspect-square relative group overflow-hidden rounded-lg">
-                            <img src="/@post.ImgPostUrl" alt="تگ شده" class="w-full h-full object-cover transition-transform group-hover:scale-110 duration-300">
-                            <div class="absolute top-2 right-2 bg-white bg-opacity-90 px-2 py-1 rounded text-xs font-bold text-gray-800">
-                                تگ شدی
-                            </div>
-                            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-                                <div class="text-white flex gap-6 text-lg font-bold">
-                                    <span class="flex items-center gap-2">
-                                        <i data-lucide="heart" class="w-6 h-6 fill-white"></i> @post.LikeCount
-                                    </span>
-                                    <span class="flex items-center gap-2">
-                                        <i data-lucide="message-circle" class="w-6 h-6 fill-white"></i> @post.CommentCount
-                                    </span>
+            <!-- تب ذخیره‌شده -->
+            <div id="saved" class="tab-content hidden">
+                @if (Model.Profile.SavedPosts is not null)
+                {
+                    <div class="grid grid-cols-3 gap-1 md:gap-4">
+                        @foreach (var post in Model.Profile.SavedPosts)
+                        {
+                            <a href="/Post/@post.PostId" class="aspect-square relative group overflow-hidden rounded-lg">
+                                <img src="/@post.ImgPostUrl" alt="ذخیره شده" class="w-full h-full object-cover transition-transform group-hover:scale-110 duration-300">
+                                <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                                    <div class="text-white flex gap-6 text-lg font-bold">
+                                        <span class="flex items-center gap-2">
+                                            <i data-lucide="heart" class="w-6 h-6 fill-white"></i> @post.LikeCount
+                                        </span>
+                                        <span class="flex items-center gap-2">
+                                            <i data-lucide="message-circle" class="w-6 h-6 fill-white"></i> @post.CommentCount
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    }
-                </div>
-            }
-            else
-            {
-                <div class="text-center py-20">
-                    <i data-lucide="tag" class="w-20 h-20 text-gray-300 mx-auto mb-4"></i>
-                    <p class="text-xl font-medium text-gray-600">هنوز تگ نشدی</p>
-                    <p class="text-sm text-gray-500 mt-2">وقتی کسی تو رو تگ کنه، اینجا نمایش داده میشه</p>
-                </div>
-            }
+                            </a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-20">
+                        <i data-lucide="bookmark" class="w-20 h-20 text-gray-300 mx-auto mb-4"></i>
+                        <p class="text-xl font-medium text-gray-600">هیچ پستی ذخیره نشده</p>
+                        <p class="text-sm text-gray-500 mt-2">وقتی پستی رو ذخیره کنی، اینجا نمایش داده میشه</p>
+                    </div>
+                }
+            </div>
+
+            <!-- تب تگ‌شده -->
+            <div id="tagged" class="tab-content hidden">
+                @if (Model.Profile.TagPosts is not null)
+                {
+                    <div class="grid grid-cols-3 gap-1 md:gap-4">
+                        @foreach (var post in Model.Profile.TagPosts)
+                        {
+                            <a href="/Post/@post.PostId" class="aspect-square relative group overflow-hidden rounded-lg">
+                                <img src="/@post.ImgPostUrl" alt="تگ شده" class="w-full h-full object-cover transition-transform group-hover:scale-110 duration-300">
+                                <div class="absolute top-2 right-2 bg-white bg-opacity-90 px-2 py-1 rounded text-xs font-bold text-gray-800">
+                                    تگ شدی
+                                </div>
+                                <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                                    <div class="text-white flex gap-6 text-lg font-bold">
+                                        <span class="flex items-center gap-2">
+                                            <i data-lucide="heart" class="w-6 h-6 fill-white"></i> @post.LikeCount
+                                        </span>
+                                        <span class="flex items-center gap-2">
+                                            <i data-lucide="message-circle" class="w-6 h-6 fill-white"></i> @post.CommentCount
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-20">
+                        <i data-lucide="tag" class="w-20 h-20 text-gray-300 mx-auto mb-4"></i>
+                        <p class="text-xl font-medium text-gray-600">هنوز تگ نشدی</p>
+                        <p class="text-sm text-gray-500 mt-2">وقتی کسی تو رو تگ کنه، اینجا نمایش داده میشه</p>
+                    </div>
+                }
+            </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <div class="mt-6">
+            <!-- تب پست‌ها -->
+            <div id="posts" class="tab-content">
+                <h1>برای دیدن پست ها ابتدا باید این کاربر را دنبال کنید</h1>
+            </div>
+        </div>
+    }
+
 </main>
 
 @section Scripts {

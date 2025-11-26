@@ -71,14 +71,22 @@ namespace MaktabGram.Domain.Services.UserAgg
             return Result<bool>.Success("ثبت نام با موفقیت انجام شد.");
         }
 
-        public GetUserProfileDto GetProfile(int userId)
+        public GetUserProfileDto GetProfile(int searchedUserId, int curentUserId)
         {
-            return userRepository.GetProfile(userId);
+            if(userRepository.IsFolllow(searchedUserId, curentUserId))
+            {
+                var user = userRepository.GetProfileWithPosts(searchedUserId, curentUserId);
+                user.IsFollower = true;
+                return user;
+            }
+
+            return userRepository.GetProfile(searchedUserId);
         }
 
         public List<SearchResultDto> Search(string username,int userId)
         {
             return userRepository.Search(username,userId);
         }
+
     }
 }

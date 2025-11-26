@@ -40,7 +40,9 @@
                 <!-- تصویر پست + انیمیشن لایک دوبل‌کلیک -->
                 <div class="relative bg-black">
                     <div class="post-media-area aspect-square cursor-pointer">
-                        <img src="/@post.ImgPostUrl" alt="پست @post.Username" class="w-full h-full object-cover">
+                        <a asp-page="Details" asp-route-id="@post.Id">
+                            <img src="/@post.ImgPostUrl" alt="پست @post.Username" class="w-full h-full object-cover">
+                        </a>
                         <!-- قلب بزرگ انیمیشنی -->
                         <div class="like-overlay pointer-events-none z-10">
                             <i data-lucide="heart" class="w-24 h-24 text-white fill-white drop-shadow-2xl"></i>

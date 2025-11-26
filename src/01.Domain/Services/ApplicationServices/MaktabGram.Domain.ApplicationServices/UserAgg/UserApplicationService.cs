@@ -22,11 +22,6 @@ namespace MaktabGram.Domain.ApplicationServices.UserAgg
             userService.DeActive(userId);
         }
 
-        public GetUserProfileDto GetProfile(int userId)
-        {
-            return userService.GetProfile(userId);
-        }
-
         public UpdateGetUserDto GetUpdateUserDetails(int userId)
         {
             return userService.GetUpdateUserDetails(userId);
@@ -68,6 +63,11 @@ namespace MaktabGram.Domain.ApplicationServices.UserAgg
         public List<SearchResultDto> Search(string username, int userId)
         {
             return userService.Search(username, userId);
+        }
+
+        public GetUserProfileDto GetProfile(int searchedUserId, int curentUserId)
+        {
+            return userService.GetProfile(searchedUserId, curentUserId);
         }
 
         public string GetImageProfileUrl(int userId)

@@ -18,7 +18,7 @@ namespace MaktabGram.Presentation.MVC.Controllers
         {
             var userId = Database.InMemoryDatabase.OnlineUser.Id;
 
-            var posts = postApplicationService.GetFeedPosts(userId);
+            var posts = postApplicationService.GetFeedPosts(userId,0,0);
             return View(posts);
         }
 

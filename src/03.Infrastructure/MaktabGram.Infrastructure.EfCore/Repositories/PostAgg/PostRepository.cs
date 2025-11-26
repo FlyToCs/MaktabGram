@@ -13,6 +13,25 @@ namespace MaktabGram.Infrastructure.EfCore.Repositories.PostAgg
     public class PostRepository(AppDbContext appDbContext) : IPostRepository
     {
 
+        public GetPostDetailsDto? GetPostDetails(int postId)
+        {
+            var post = appDbContext.Posts.Include(p => p.Comments).ThenInclude(c => c.User)
+                .Where(x => x.Id == postId)
+                .Select(p => new GetPostDetailsDto
+                {
+                    Id = p.Id,
+                    Caption = p.Caption,
+                    ImgPostUrl = p.ImageUrl,
+                    LikeCount = p.PostLikes.Count,
+                    Username = p.User.Username,
+                    CreateAt = p.CreatedAt.ToPersianString("dddd, dd MMMM,yyyy"),
+                    ProfileImgUrl = p.User.Profile.ProfileImageUrl,
+                    Comments = p.Comments,
+                }).FirstOrDefault();
+
+            return post;
+        }
+
         public List<GetPostForFeedsDto> GetFeedPosts(int userId, int page, int pageSize)
         {
 

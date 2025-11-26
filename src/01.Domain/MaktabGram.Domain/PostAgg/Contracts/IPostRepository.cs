@@ -10,5 +10,6 @@ namespace MaktabGram.Domain.Core.PostAgg.Contracts
         public void Like(int userId, int PostId);
         public bool UserLikePost(int userId, int PostId);
         public void DisLike(int userId, int PostId);
+        public GetPostDetailsDto? GetPostDetails(int postId);
     }
 }
